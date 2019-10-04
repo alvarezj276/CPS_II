@@ -15,13 +15,13 @@ struct song{
 	char performer;
 	int genre;
 	song *nextaddr;
-}
+};
 
 struct playlist{
 	string name;
 	song item;
 	playlist *nextaddr;
-}
+};
 int getCount(playlist *head)
 {
     if (head == NULL)
@@ -41,7 +41,6 @@ void Create(song *songhead){
 	char select; 
 	if(list >= 5){
 		cout << "Maximum number of playlists in library. Upgrade to premium for additional storage." << endl;
-		break;
 	}
 	else{
 		list++;
