@@ -40,6 +40,17 @@ int getCount(playlist *head)
     return getCount(head->nextaddr)+1;
 }
 
+playlist *append(playlist *head,song *used){
+    playlist *add = head,*tmp;
+    while(add->nextaddr != NULL){
+    	add = add->nextaddr;
+    }
+    add->nextaddr=tmp;
+    tmp->item=used;
+    tmp->nextaddr=NULL;
+    return tmp;
+}
+
 void Create(song *songhead, int list, playlist *list_name[]){
 	/*
 	 * Inputs: list size, playlists array, songs *head
@@ -48,15 +59,15 @@ void Create(song *songhead, int list, playlist *list_name[]){
 
 	//entry-maker
 	char select;
+	const int PLAYLIST_SIZE=200;
 	if(list >= 5){
 		cout << "Maximum number of playlists in library. Upgrade to premium for additional storage." << endl;
 	}
 	else{
 		list++;
 		int position; char checker;
-		playlist *current,*head,*next;
+		playlist *current=new playlist,*head,*next=new playlist;
 		song *tmpcurrent=songhead;
-		current = new playlist;
 //		int year=1950;
 //		int decade[7][10];
 //		for(int i=0;i<7;i++){
@@ -67,16 +78,17 @@ void Create(song *songhead, int list, playlist *list_name[]){
 //		}
 		cout << "New Playlist: \nEnter Playlist name: ";
 		getline(cin,current->name);
-		list_name[list]=current;
 		head=current;
+		list_name[list]=head;
 		do{
+			bool first=true;
 			cout << "Choose Playlist entry-maker: \n  (R)anking     (D)ecade     (P)erformer     (G)enre\nEntry: ";
 			cin >> select; cin.ignore();
 			switch(select){
 			case 'r':
 			case 'R':cout << "Enter song ranking: ";
 					cin >> position; cin.ignore();
-					if(position>200){
+					if(position>PLAYLIST_SIZE){
 						cout << "Song ranking not valid. Reselect entry-maker" << endl;
 						break;
 					}
@@ -100,20 +112,26 @@ void Create(song *songhead, int list, playlist *list_name[]){
 					break;
 			case 'd':
 			case 'D':cout << "Enter song decade: ";
-					cin >> position; cin.ignore();
+					cin >> position; //cin.ignore();
 					if(position == 50 || position == 60 || position == 70 || position == 80
 							 || position == 90 || position == 00 || position == 10){
-						while(tmpcurrent != NULL){
-							if(tmpcurrent->decade == position){
-								if(getCount(head)==1){
+						tmpcurrent=songhead;
+						current->nextaddr=NULL;
+						for(int i=0; i<PLAYLIST_SIZE; i++){
+							if(tmpcurrent->decade==position){
+								if(current->nextaddr==NULL && first){
 									current->item=tmpcurrent;
 									current->nextaddr=NULL;
+									first=!first;
 								}
 								else{
+									current=head;
+									playlist *next=new playlist;
 									next->item=tmpcurrent;
+									while(current->nextaddr != NULL)
+										current=current->nextaddr;
 									current->nextaddr=next;
 									next->nextaddr=NULL;
-									current=next;
 								}
 							}
 							tmpcurrent=tmpcurrent->nextaddr;
@@ -124,25 +142,38 @@ void Create(song *songhead, int list, playlist *list_name[]){
 						break;
 					}
 					select=' ';
+					cin.ignore();
 					break;
 			case 'p':
-			case 'P':cout << "Enter song performer: ";
+			case 'P':cout << "Enter performer type: ";
 					cin >> checker; cin.ignore();
-					current=head;
-					while(tmpcurrent != NULL){
-						if(tmpcurrent->performer==checker){
-							if(getCount(head)==1){
-								current->item=tmpcurrent;
-								current->nextaddr=NULL;
+					if(checker == 'F' || checker =='M' || checker =='G'){
+						current=head;
+						tmpcurrent=songhead;
+						current->nextaddr=NULL;
+						for(int i=0; i<PLAYLIST_SIZE; i++){
+							if(tmpcurrent->performer==checker){
+								if(current->nextaddr==NULL && first){
+									current->item=tmpcurrent;
+									current->nextaddr=NULL;
+									first=!first;
+								}
+								else{
+									current=head;
+									playlist *next=new playlist;
+									next->item=tmpcurrent;
+									while(current->nextaddr != NULL)
+										current=current->nextaddr;
+									current->nextaddr=next;
+									next->nextaddr=NULL;
+								}
 							}
-							else{
-								next->item=tmpcurrent;
-								current->nextaddr=next;
-								next->nextaddr=NULL;
-								current=next;
-							}
+							tmpcurrent=tmpcurrent->nextaddr;
 						}
-						tmpcurrent=tmpcurrent->nextaddr;
+					}
+					else{
+						cout << "Performer not valid. Reselect entry-maker" << endl;
+						break;
 					}
 					select=' ';
 				break;
@@ -159,19 +190,23 @@ void Create(song *songhead, int list, playlist *list_name[]){
 						cout << "Genre not valid. Reselect entry-maker" << endl;
 						break;
 					}
-					while(tmpcurrent->nextaddr != NULL){
+					tmpcurrent=songhead;
+					current->nextaddr=NULL;
+					for(int i=0; i<PLAYLIST_SIZE; i++){
 						if(tmpcurrent->genre==position){
-							if(getCount(head)==1){
-								cout << "added1" << endl;
+							if(current->nextaddr==NULL && first){
 								current->item=tmpcurrent;
 								current->nextaddr=NULL;
+								first=!first;
 							}
 							else{
-								cout << "added" << endl;
+								current=head;
+								playlist *next=new playlist;
 								next->item=tmpcurrent;
+								while(current->nextaddr != NULL)
+									current=current->nextaddr;
 								current->nextaddr=next;
 								next->nextaddr=NULL;
-								current=next;
 							}
 						}
 						tmpcurrent=tmpcurrent->nextaddr;
@@ -206,6 +241,8 @@ int main(){
 	Create(main_head, list,list_name);
 	string playlistname, filename;
 
+//cout << list_name[0]->item->name << endl;
+//cout << list_name[0]->nextaddr->item->name << endl;
 	cout << "enter playlist name: \n";
 	getline(cin,playlistname);
 //
@@ -241,7 +278,7 @@ song *Read(){
 		getline(inFile, current->artist);
 		inFile >> current->rank; inFile.ignore();
 		inFile >> current->year; inFile.ignore();
-		inFile >> current->decade; inFile.ignore();
+		inFile >> current->decade;inFile.ignore();
 		inFile >> current->performer; inFile.ignore();
 		inFile >> current->genre; inFile.ignore();
 
@@ -265,63 +302,46 @@ song *Read(){
 }
 
 void Show(playlist *head, string plname){
-
 	playlist *current = head;
 
-	//	cout << "test 1" << endl;
+	if (plname==current->name){
+		while(current != NULL){
+			cout << "Song: "<< current->item->name << endl;
+			cout << "Artist: " << current->item->artist<< endl;
+			cout << "Billboard Ranking (#): " << current->item->rank<< endl;
+			cout << "Year of Release: " << current->item->year << endl;
+			cout << "Song Decade: " << current->item->decade<< endl;
+			cout << "Song Performer: " << current->item->performer<< endl;
+			cout << "Song Genre (#): " << current->item->genre<< endl;
 
-	if (plname==(current->name))
-		while (current != NULL){
-			//			cout << "test 2" << endl;
-			//			cout <<plname << endl;
-			//			cout <<current->name<<endl;
-
-			//			cout << "test 3" << endl;
-			//			while (current != NULL)
-			//			{
-			//	cout << current->name << endl;
-			cout << current->item->name << endl;
-			cout << current->item->artist<< endl;
-			cout << current->item->rank<< endl;
-			cout << current->item->decade<< endl;
-			cout << current->item->performer<< endl;
-			cout << current->item->genre<< endl;
-
-			current=current->nextaddr;
-
+			current = current->nextaddr;
 		}
-
-
+	}
 	return;
 }
 
 void Save(playlist *head, string name) {
 
-
-
-	name += ".txt";
-
-	cout << name;
-
-	ofstream outFile;
-
-	outFile.open(name);
-
 	playlist *current = head;
-
-	while (current != NULL)
-	{
-		cout << current->name << endl;
-		//		cout << current->artist<< endl;
-		//		cout << current->rank<< endl;
-		//		cout << current->decade<< endl;
-		//		cout << current->performer<< endl;
-		//		cout << current->genre<< endl;
-		//
-
-		current = current->nextaddr;
+	name += ".txt";
+	if(head==NULL){
+		current=Read();
 	}
-
+	ofstream outFile;
+	outFile.open(name);
+	outFile<< current->name << ":\n"<< endl;
+	while (current->nextaddr != NULL)
+	{
+		outFile<< "Song: "<< current->item->name << endl;
+		outFile<< "Artist: " << current->item->artist << endl;
+		outFile<< "Billboard Ranking (#): " << current->item->rank << endl;
+		outFile<< "Year of Release: " << current->item->year << endl;
+		outFile<< "Song Decade: " << current->item->decade << endl;
+		outFile<< "Song Performer: " << current->item->performer << endl;
+		outFile<< "Song Genre (#): " << current->item->genre << endl;
+		current=current->nextaddr;
+	}
+	outFile.close();
 	return;
 
 
