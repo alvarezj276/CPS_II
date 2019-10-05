@@ -221,6 +221,91 @@ void Create(song *songhead, int list, playlist *list_name[]){
 	}
 }
 
+playlist *Modify(playlist *head, string plname, int list, playlist *list_name[]){
+	bool check = false;
+
+	playlist *current,*previous;
+
+	current = head;
+
+	char userchoice;
+	int n, m;
+
+	for (int i=0; i<list; i++)
+	{
+		if (list_name[i]->name == plname)
+		{
+			check = true;
+		}
+
+	}
+
+	while(check)
+	{
+		cout << "Insert (I) or Delete (D): "; cin >> userchoice;
+
+		switch(userchoice)
+		{
+		case 'I':
+			cout << "Enter the Rank of the song you would like added to the playlist: "; cin >>n;
+			cout << "Enter the position you would like the song placed: "; cin >> m;
+
+			for (int i=1; i<m; i++)
+			{
+				previous = current;
+				current = current->nextaddr;
+			}
+			current->item->rank = m;
+			break;
+		case 'D':
+			cout << "Enter the position of the song you would like deleted: "; cin >>n;
+
+			if (n==1)
+			{
+				head = current->nextaddr;
+			}
+			else
+			{
+				for (int i=1; i<n; i++)
+				{
+					previous = current;
+					current = current->nextaddr;
+				}
+				previous->nextaddr = current->nextaddr;
+			}
+			delete(current);
+			break;
+		}
+
+
+	}
+
+	return(head);
+}
+
+playlist *Delete(playlist *head, string plname, int list, playlist *list_name[]){
+	playlist *current, *previous;
+	current = head;
+	bool check = false;
+
+	for (int i=0; i<list; i++)
+		{
+			if (list_name[i]->name == plname)
+			{
+				check = true;
+			}
+
+		}
+
+	while(check){
+		previous = current->nextaddr;
+		delete(current);
+		current = previous;
+	}
+
+	return(head);
+
+}
 
 void Save(playlist *head, string plname, string fname);
 
