@@ -29,7 +29,7 @@ struct playlist
 int list;
 playlist list_name[5];
 
-void Show(playlist *head, string plname);
+void Display(playlist *head, string plname);
 
 song *Read();
 
@@ -337,7 +337,7 @@ int main(){
 //
 //	//Save(main_head, filename);
 //
-	Show(list_name[0], playlistname);
+	Display(list_name[0], playlistname);
 
 }
 
@@ -386,7 +386,7 @@ song *Read(){
 	return(head);
 }
 
-void Show(playlist *head, string plname){
+void Display(playlist *head, string plname){
 	playlist *current = head;
 
 	if (plname==current->name){
