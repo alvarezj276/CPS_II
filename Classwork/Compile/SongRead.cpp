@@ -53,7 +53,6 @@ void Create(song *songhead, int list, playlist *list_name[]){
 		cout << "Maximum number of playlists in library. Upgrade to premium for additional storage." << endl;
 	}
 	else{
-		list++;
 		int position; char checker;
 		playlist *current=new playlist,*head,*next=new playlist;
 		song *tmpcurrent=songhead;
@@ -340,7 +339,7 @@ void Save(playlist *head, string plname, string fname);
 
 int main(){
 
-	int list=-1;
+	int list;
 	playlist *list_name[5];
 //	song TestSongA = {"THE TWIST", "Chubby Checker", 1, 1960, 60, 'M', 6, NULL};
 //	playlist testplaylistA = {"Test Playlist #1",{"THE TWIST", "Chubby Checker", 1, 1960, 60, 'M', 6, NULL},NULL};
@@ -352,6 +351,9 @@ int main(){
 //	playlist *playlistmain_head;
 
 	main_head = Read();
+	list=0;
+	Create(main_head, list,list_name);	
+	list=1;
 	Create(main_head, list,list_name);
 	string playlistname, filename;
 
