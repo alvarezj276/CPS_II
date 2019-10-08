@@ -6,7 +6,6 @@
 
 using namespace std;
 
-
 struct song
 {
 	string name;
@@ -22,94 +21,355 @@ struct song
 struct playlist
 {
 	string name;
-	song item;
+	song *item;
 	playlist *nextaddr;
 };
 
-void Show(playlist *head, string plname);
+
+int list;
+playlist list_name[5];
+
+void Display(playlist *head, string plname);
 
 song *Read();
 
-playlist *Modify(playlist *head, string plname,int list, playlist *list_name[] );
+int getCount(playlist *head){
+    if (head == NULL)
+        return 0;
+    return getCount(head->nextaddr)+1;
+}
 
-playlist *Delete(playlist *head, string plname,int list, playlist *list_name[] );
+playlist *Modify(string plname,int list, playlist *head[] );
 
+playlist *Delete(string plname,int list, playlist *head[] );
 
-//void Save(playlist *head, string plname, string fname);
+void Create(song *songhead, int list, playlist *list_name[]){
+	/*
+	 * Inputs: list size, playlists array, songs *head
+	 */
+	char select;
+	const int PLAYLIST_SIZE=200;
+	if(list >= 5){
+		cout << "Maximum number of playlists in library. Upgrade to premium for additional storage." << endl;
+	}
+	else{
+		int position; char checker;
+		playlist *current=new playlist,*head,*next=new playlist;
+		song *tmpcurrent=songhead;
+		cout << "New Playlist: \nEnter Playlist name: ";
+		getline(cin,current->name);
+		head=current;
+		current->nextaddr=NULL;
+		list_name[list]=head;
+		do{
+			bool first=true,valid_genre=false;
+			cout << "Choose Playlist entry-maker: \n  (R)anking     (D)ecade     (P)erformer     (G)enre     (M)ulti-Entry\nEntry: ";
+			cin >> select; cin.ignore();
+			switch(select){
+			case 'r':
+			case 'R':cout << "Enter song ranking: ";
+					cin >> position; cin.ignore();
+					if(position>PLAYLIST_SIZE){
+						cout << "Song ranking not valid. Reselect entry-maker" << endl;
+						break;
+					}
+					while(true){
+						if(tmpcurrent->rank == position){
+							if(getCount(head)==1){
+								current->item=tmpcurrent;
+								current->nextaddr=NULL;
+							}
+							else{
+								current->nextaddr=next;
+								next->item=tmpcurrent;
+								next->nextaddr=NULL;
+							}
+							break;
+							select=' ';
+						}
+						tmpcurrent=tmpcurrent->nextaddr;
+					}
+					select=' ';
+					break;
+			case 'd':
+			case 'D':cout << "Enter song decade: ";
+					cin >> position; //cin.ignore();
+					if(position == 50 || position == 60 || position == 70 || position == 80
+							 || position == 90 || position == 00 || position == 10){
+						tmpcurrent=songhead;
+						for(int i=0; i<PLAYLIST_SIZE; i++){
+							if(tmpcurrent->decade==position){
+								if(current->nextaddr==NULL && first){
+									current->item=tmpcurrent;
+									current->nextaddr=NULL;
+									first=!first;
+								}
+								else{
+									current=head;
+									playlist *next=new playlist;
+									next->item=tmpcurrent;
+									while(current->nextaddr != NULL)
+										current=current->nextaddr;
+									current->nextaddr=next;
+									next->nextaddr=NULL;
+								}
+							}
+							tmpcurrent=tmpcurrent->nextaddr;
+						}
+					}
+					else{
+						cout << "Decade not valid. Reselect entry-maker" << endl;
+						break;
+					}
+					select=' ';
+					cin.ignore();
+					break;
+			case 'p':
+			case 'P':cout << "Enter performer type: ";
+					cin >> checker; cin.ignore();
+					if(checker == 'F' || checker =='M' || checker =='G'){
+						tmpcurrent=songhead;
+						for(int i=0; i<PLAYLIST_SIZE; i++){
+							if(tmpcurrent->performer==checker){
+								if(current->nextaddr==NULL && first){
+									current->item=tmpcurrent;
+									current->nextaddr=NULL;
+									first=!first;
+								}
+								else{
+									current=head;
+									playlist *next=new playlist;
+									next->item=tmpcurrent;
+									while(current->nextaddr != NULL)
+										current=current->nextaddr;
+									current->nextaddr=next;
+									next->nextaddr=NULL;
+								}
+							}
+							tmpcurrent=tmpcurrent->nextaddr;
+						}
+					}
+					else{
+						cout << "Performer not valid. Reselect entry-maker" << endl;
+						break;
+					}
+					select=' ';
+				break;
+			case 'g':
+			case 'G':cout << "|1| Latin\n|2| Country\n|3| Hip-Hop/Rap\n|4| Jazz\n|5| Dance/Electronic\n|6| R&B\n|7| Pop\n|8| Rock\n";
+					cout << "Select " << head->name << " genre : ";
+					cin >> position; cin.ignore();
+					for(int i=1;i<9;i++){
+						if(i==position)
+							valid_genre=true;
+					}
+					if(valid_genre != true){
+						cout << "Genre not valid. Reselect entry-maker" << endl;
+						break;
+					}
+					tmpcurrent=songhead;
+					for(int i=0; i<PLAYLIST_SIZE; i++){
+						if(tmpcurrent->genre==position){
+							if(current->nextaddr==NULL && first){
+								current->item=tmpcurrent;
+								current->nextaddr=NULL;
+								first=!first;
+							}
+							else{
+								current=head;
+								playlist *next=new playlist;
+								next->item=tmpcurrent;
+								while(current->nextaddr != NULL)
+									current=current->nextaddr;
+								current->nextaddr=next;
+								next->nextaddr=NULL;
+							}
+						}
+						tmpcurrent=tmpcurrent->nextaddr;
+					}
+					select=' ';
+				break;
+			case 'm':
+			case 'M': int decade, genre; char performer;
+					cout << "Enter Song Decade: ";
+					cin >> decade;
+					if(decade == 50 || decade == 60 || decade == 70 || decade == 80
+							|| decade == 90 || decade == 00 || decade == 10){
+						cout << "Enter Song Performer Type: ";
+						cin >> performer; cin.ignore();
+						if(performer == 'F' || performer =='M' || performer =='G'){
+							cout << "|1| Latin\n|2| Country\n|3| Hip-Hop/Rap\n|4| Jazz\n"
+									"|5| Dance/Electronic\n|6| R&B\n|7| Pop\n|8| Rock\n";
+							cout << "Select " << head->name << " genre : ";
+							cin >> genre; cin.ignore();
+							for(int i=1;i<9;i++){
+								if(i==genre)
+									valid_genre=true;
+							}
+							if(valid_genre != true){
+								cout << "Genre not valid. Reselect entry-maker" << endl;
+								break;
+							}
+							tmpcurrent=songhead;
+							for(int i=0; i<PLAYLIST_SIZE; i++){
+								if(tmpcurrent->performer==performer &&
+									tmpcurrent->decade==decade && tmpcurrent->genre==genre){
+									if(current->nextaddr==NULL && first){
+										current->item=tmpcurrent;
+										current->nextaddr=NULL;
+										first=!first;
+									}
+									else{
+										current=head;
+										playlist *next=new playlist;
+										next->item=tmpcurrent;
+										while(current->nextaddr != NULL)
+											current=current->nextaddr;
+										current->nextaddr=next;
+										next->nextaddr=NULL;
+									}
+								}
+								tmpcurrent=tmpcurrent->nextaddr;
+							}
+						}
+						else{
+							cout << "Performer not valid. Reselect entry-maker" << endl;
+							break;
+						}
+					}
+					else{
+						cout << "Decade not valid. Reselect entry-maker" << endl;
+						break;
+					}
+					select=' ';
+				break;
+			}
+		}while(select == 'R' || select == 'r'
+				|| select == 'D' || select == 'd'
+				|| select == 'P' || select == 'p'
+				|| select == 'G' || select == 'g');
+	}
+}
 
-void Create(song *head);
-int list;
-	playlist list_name[5];
+playlist *Modify(string plname, int list, playlist *head[]){
+	bool check = false;
 
+	playlist *current,*previous,*tmphead;
+	char userchoice;
+	int n, m;
+
+	for(int i=0;i<list;i++)
+		if(head[i]->name==plname){
+			current=head[i];
+			tmphead=current;
+			check=true;
+		}
+
+	if(check){
+		while(check)
+			{
+				cout << "Insert (I) or Delete (D): "; cin >> userchoice;
+
+				switch(userchoice)
+				{
+				case 'I':
+					cout << "Enter the Rank of the song you would like added to the playlist: "; cin >>n;
+					cout << "Enter the position you would like the song placed: "; cin >> m;
+
+					for (int i=1; i<m; i++)
+					{
+						previous = current;
+						current = current->nextaddr;
+					}
+					current->item->rank = m;
+					break;
+				case 'D':
+					cout << "Enter the position of the song you would like deleted: "; cin >>n;
+
+					if (n==1)
+					{
+						tmphead = current->nextaddr;
+					}
+					else
+					{
+						for (int i=1; i<n; i++)
+						{
+							previous = current;
+							current = current->nextaddr;
+						}
+						previous->nextaddr = current->nextaddr;
+					}
+					delete(current);
+					break;
+				}
+			}
+		return(tmphead);
+	}
+	else{
+		cout << "Name does not match available playlists"<<endl;
+		return(NULL);
+	}
+}
+
+playlist *Delete(string plname, int list, playlist *head[]){
+
+	playlist *current, *previous,*tmphead;
+	bool check = false;
+	for(int i=0;i<list;i++)
+		if(head[i]->name==plname){
+			current=head[i];
+			tmphead=current;
+			check=true;
+		}
+	if(check){
+		while(check){
+			previous = current->nextaddr;
+			delete(current);
+			current = previous;
+		}
+		return(tmphead);
+	}
+	else{
+		cout << "Name does not match available playlists"<<endl;
+		return(NULL);
+	}
+}
+
+void Save(playlist *head, string plname, string fname);
 
 int main(){
 
+	int list;
+	playlist *list_name[5];
+//	song TestSongA = {"THE TWIST", "Chubby Checker", 1, 1960, 60, 'M', 6, NULL};
+//	playlist testplaylistA = {"Test Playlist #1",{"THE TWIST", "Chubby Checker", 1, 1960, 60, 'M', 6, NULL},NULL};
 
-	string filename, playlistname;
-	bool end= true;
-	char userinput;
+	//playlist testplaylistB = {"Test Playlist #2", "SMOOTH", "Santana Featuring Rob Thomas", 2, 1999, 'G', 8 };
+
 
 	song *main_head;
-
-	playlist *playlistmain_head;
+//	playlist *playlistmain_head;
 
 	main_head = Read();
+	list=0;
+	Create(main_head, list,list_name);
+	list=1;
+	Create(main_head, list,list_name);
+	string playlistname, filename;
 
-	song TestSongA = {"THE TWIST", "Chubby Checker", 1, 1960, 60, 'M', 6, NULL};
+//cout << list_name[0]->item->name << endl;
+//cout << list_name[0]->nextaddr->item->name << endl;
+	cout << "enter playlist name: \n";
+	getline(cin,playlistname);
+//
+//	cout << "enter file name: "; cin >> filename;
+//
+//
+//
+//	//Save(main_head, filename);
+//
+	Display(list_name[0], playlistname);
 
-	song TestSongB = {"THE Turn", "Chubby ", 2, 1970, 70, 'G', 2, NULL};
-
-	playlist testplaylistA = {"Test Playlist", TestSongA, NULL};
-
-
-	//playlist list_name[0] = testplaylistA;
-
-
-	while(end)
-	{
-		cout << "Playlist Creater Menu:" << endl;
-		cout << right << setw(4) << "(C)reate" << right  << setw(4) << "(P)review" <<  setw(4) << "(M)odify" << endl;
-		cout << right << setw(4) << "(S)ave" << right  << setw(4) << "(D)elete" << setw(4) << "(Q)uit" << endl;
-		cout << "Option....... : " << endl;
-
-		cin >> userinput; cin.ignore();
-
-		switch(userinput)
-		{
-		case 'C':
-			//create
-			Create(main_head);
-			break;
-		case 'P':
-			cout << "enter playlist name: ";
-			getline(cin,playlistname);
-			Show(playlistmain_head, playlistname);
-			break;
-		case 'M':
-			cout << "enter playlist name: ";
-			getline(cin,playlistname);
-			//Modify(playlistmain_head, playlistname,list, list_name[0]);
-			break;
-		case 'D':
-			cout << "Delete Playlist : ";
-			getline(cin,playlistname);
-				//Delete(playlistmain_head, playlistname, list , list_name);
-			break;
-		case 'S':
-			cout << "enter playlist name: ";
-			getline(cin,playlistname);
-			cout << "enter file name: "; cin >> filename;
-			//save
-			break;
-
-		case 'Q':
-			cout << "Have a Nice Day" << endl;
-			end = false;
-			break;
-		default :
-			cout << "Invalid , please enter one of the following : " << endl;
-		}
-	}
 }
 
 song *Read(){
@@ -134,7 +394,7 @@ song *Read(){
 		getline(inFile, current->artist);
 		inFile >> current->rank; inFile.ignore();
 		inFile >> current->year; inFile.ignore();
-		inFile >> current->decade; inFile.ignore();
+		inFile >> current->decade;inFile.ignore();
 		inFile >> current->performer; inFile.ignore();
 		inFile >> current->genre; inFile.ignore();
 
@@ -157,159 +417,64 @@ song *Read(){
 	return(head);
 }
 
-void Show(playlist *head, string plname){
-
+void Display(playlist *head, string plname){
 	playlist *current = head;
-
-	cout << "test 1" << endl;
-
-	while (current != NULL)
-	{
-
-		cout << "test 2" << endl;
-		cout <<plname << endl;
-
-		//string tmp = current->name;
-
-		if (plname.compare(current->name))
-		{
-
-			cout << "test 3" << endl;
-			while (current != NULL)
-			{
-				//	cout << current->name << endl;
-				cout << current->item.name << endl;
-				cout << current->item.artist<< endl;
-				cout << current->item.rank<< endl;
-				cout << current->item.decade<< endl;
-				cout << current->item.performer<< endl;
-				cout << current->item.genre<< endl;
-
-				current = current->nextaddr;
-
-			}
-			break;
-		}
+	if (plname==current->name){
+		cout << plname<< ":\n____________________________________\n";
+		if(current==NULL)
+			cout<<"Playlist empty"<<endl;
 		else
-			current = current->nextaddr;
-	}
-	return;
-}
+			while(current != NULL){
+				cout << "Song: "<< current->item->name << endl;
+				cout << "Artist: " << current->item->artist<< endl;
+				cout << "Billboard Ranking (#): " << current->item->rank<< endl;
+				cout << "Year of Release: " << current->item->year << endl;
+				cout << "Song Decade: " << current->item->decade<< endl;
+				cout << "Song Performer: " << current->item->performer<< endl;
+				cout << "Song Genre (#): " << current->item->genre << endl;
+				cout << "------------------------------------\n";
 
-void Save(playlist *head, string name) {
-
-	//name += ".txt";
-
-	cout << name;
-
-	ofstream outFile;
-
-	//outFile.open(name + ".txt");
-
-	playlist *current = head;
-
-	while (current != NULL)
-	{
-		cout << current->name << endl;
-		//		cout << current->artist<< endl;
-		//		cout << current->rank<< endl;
-		//		cout << current->decade<< endl;
-		//		cout << current->performer<< endl;
-		//		cout << current->genre<< endl;
-		//
-
-		current = current->nextaddr;
-	}
-
-
-	outFile.close();
-	return;
-
-
-}
-
-playlist *Modify(playlist *head, string plname, int list, playlist *list_name[]){
-	bool check = false;
-
-	playlist *current,*previous;
-
-	current = head;
-
-	char userchoice;
-	int n, m;
-
-	for (int i=0; i<list; i++)
-	{
-		if (list_name[i]->name == plname)
-		{
-			check = true;
-		}
-
-	}
-
-	while(check)
-	{
-		cout << "Insert (I) or Delete (D): "; cin >> userchoice;
-
-		switch(userchoice)
-		{
-		case 'I':
-			cout << "Enter the Rank of the song you would like added to the playlist: "; cin >>n;
-			cout << "Enter the position you would like the song placed: "; cin >> m;
-
-			for (int i=1; i<m; i++)
-			{
-				previous = current;
 				current = current->nextaddr;
 			}
-			current->item.rank = m;
-			break;
-		case 'D':
-			cout << "Enter the position of the song you would like deleted: "; cin >>n;
-
-			if (n==1)
-			{
-				head = current->nextaddr;
-			}
-			else
-			{
-				for (int i=1; i<n; i++)
-				{
-					previous = current;
-					current = current->nextaddr;
-				}
-				previous->nextaddr = current->nextaddr;
-			}
-			delete(current);
-			break;
-		}
-
-
 	}
-
-	return(head);
+	else{
+		cout << "Playlist name not found" << endl;
+	}
 }
 
-playlist *Delete(playlist *head, string plname, int list, playlist *list_name[]){
-	playlist *current, *previous;
-	current = head;
-	bool check = false;
+void Save(playlist *head[], string name, int list) {
 
-	for (int i=0; i<list; i++)
-		{
-			if (list_name[i]->name == plname)
-			{
-				check = true;
-			}
-
+	playlist *current;
+	name += ".txt";
+	bool valid_name=false;
+	for(int i=0;i<list;i++){
+		if(head[i]->name==name){
+			current=head[i];
+			valid_name=true;
 		}
-
-	while(check){
-		previous = current->nextaddr;
-		delete(current);
-		current = previous;
 	}
+	if(valid_name){
+		ofstream outFile;
+		outFile.open(name);
+		if(current==NULL)
+			outFile<<"Playlist empty"<<endl;
+		else{
+			outFile << current->name << ":\n____________________________________\n";
+			while (current->nextaddr != NULL)
+			{
+				outFile<< "Song: "<< current->item->name << endl;
+				outFile<< "Artist: " << current->item->artist << endl;
+				outFile<< "Billboard Ranking (#): " << current->item->rank << endl;
+				outFile<< "Year of Release: " << current->item->year << endl;
+				outFile<< "Song Decade: " << current->item->decade << endl;
+				outFile<< "Song Performer: " << current->item->performer << endl;
+				outFile<< "Song Genre (#): " << current->item->genre << endl;
+				outFile<< "------------------------------------\n";
 
-	return(head);
-
+				current=current->nextaddr;
+			}
+		}
+		outFile.close();
+	}
+	else cout << "Name does not match available playlists" << endl;
 }

@@ -36,7 +36,7 @@ song *Read(){
 		getline(inFile, current->artist);
 		inFile >> current->rank; inFile.ignore();
 		inFile >> current->year; inFile.ignore();
-		inFile >> current->decade;inFile.ignore();
+		inFile >> current->decade;//inFile.ignore();
 		inFile >> current->performer; inFile.ignore();
 		inFile >> current->genre; inFile.ignore();
 
@@ -51,11 +51,10 @@ song *Read(){
 			current = current->nextaddr;
 		}
 
-	}
-	while(true);
+	}while(true);
 
 	inFile.close();
 
-	return(head);
+	return (head);
 }
 

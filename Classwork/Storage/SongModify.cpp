@@ -26,9 +26,7 @@ playlist *Modify(string plname, int list, playlist *head[]){
 	char userchoice;
 	int rank, position;
 
-	for(int i=0;i<5;i++)
-	{
-
+	for(int i=0;i<5;i++){
 		cout << "test #" << i << endl;
 		cout << "entered playlist name: " << plname << endl;
 		cout << "check :: " << head[i]->name << endl;
@@ -36,32 +34,22 @@ playlist *Modify(string plname, int list, playlist *head[]){
 		if(plname == head[i]->name){
 			cout << "test" << endl;
 			current_playlist=head[i];
+			//			head_playlist=current_playlist;
 			match =i;
 			check=true;
 			break;
 		}
 	}
-
-
 	if(check){
 		while(check)
 		{
-			//current = just;
 			cout << "Insert (I) or Delete (D): "; cin >> userchoice;
-
 			switch(userchoice)
 			{
-				///insert isnt working
 			case 'I':
 				cout << "Enter the Rank of the song you would like added to the playlist: "; cin >>rank;
 				cout << "Enter the position you would like the song placed: "; cin >> position;
-
-				//				while((songcurrent->rank) < n){
-				//								songcurrent = songcurrent->nextaddr;
-				//							}
-
 				new_song = new song;
-
 				new_song->name = current_song->name;
 				new_song->artist = current_song->artist;
 				new_song->rank = current_song->rank;
@@ -72,57 +60,30 @@ playlist *Modify(string plname, int list, playlist *head[]){
 
 				if (position==1)
 				{
-					//new_song->nextaddr = current_playlist->item;
+					//tmp->nextaddr = current;
 					head[match]->item = new_song;
 				}
-				else
-				{
-					for (int i=1; i<position; i++)
-					{
-						previous_playlist = current_playlist;
-						current_playlist = current_playlist->nextaddr;
-					}
-					new_song->nextaddr = current_playlist->item;
-					previous_playlist->item->nextaddr = new_song;
-				}
-
-
-
-				if (position==1)
-				{
-					//tmp->nextaddr = current;
-					head[match] = new_song;
-				}
 				else{
-					if(m==(getCount(head)+1)){
-
-						current=head;
-						while(current->nextaddr != NULL)
-							current=current->nextaddr;
-						current->nextaddr=tmp;
-						tmp->nextaddr=NULL;
+					if(position==(getCount(head)+1)){
+						current_playlist=head[match];
+						while(current_playlist->nextaddr != NULL)
+							current_playlist=current_playlist->nextaddr;
+						current_playlist->nextaddr=tmp_playlist;
+						tmp_playlist->nextaddr=NULL;
 					}
 					else
 					{
-						for (int i=1; i<m; i++)
-						{
-							previous = current;
-							current = current->nextaddr;
+						for (int i=1; i<position; i++){
+							previous_playlist = current_playlist;
+							current_playlist = current_playlist->nextaddr;
 						}
-						tmp->nextaddr = current;
-						previous->nextaddr = tmp;
+						new_song->nextaddr = current_playlist->item;
+						previous_playlist->item->nextaddr = new_song;
 
 					}
 				}
-
-
-
-
-
 				check = false;
 				break;
-
-
 			case 'D':
 				cout << "Enter the position of the song you would like deleted: "; cin >>position;
 
@@ -144,10 +105,10 @@ playlist *Modify(string plname, int list, playlist *head[]){
 				break;
 			}
 		}
-		return(head[match]);
+		return head[match];
 	}
 	else{
 		cout << "Name does not match available playlists"<<endl;
-		return(NULL);
+		return NULL;
 	}
 }

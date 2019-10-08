@@ -14,7 +14,7 @@ playlist list_name[5];
 int getCount(playlist *head){
 	if (head == NULL)
 		return 0;
-	return getCount(head->nextaddr)+1;
+	return (getCount(head->nextaddr)+1);
 }
 
 void Create(song *songhead, int list, playlist *list_name[]){

@@ -54,4 +54,5 @@ void Save(playlist *head[], string name, int list) {
 		outFile.close();
 	}
 	else cout << "Name does not match available playlists" << endl;
+	return;
 }

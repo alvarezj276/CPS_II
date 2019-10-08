@@ -45,4 +45,6 @@ void Create(song *songhead, int list, playlist *list_name[]);
 
 void Save(playlist *head[], string name, int list);
 
+int getCount(playlist *head){
+
 #endif /* SONGHEADER_H_ */
