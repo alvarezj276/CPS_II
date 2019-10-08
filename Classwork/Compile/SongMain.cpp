@@ -280,7 +280,7 @@ int main(){
 			cout << "enter playlist name: ";
 			getline(cin,playlistname);
 			cout << "enter file name: "; cin >> filename;
-			//Save(list_name[], filename, list);
+			Save(list_name, filename, playlistname,list);
 			break;
 
 		case 'Q':

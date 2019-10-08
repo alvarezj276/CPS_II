@@ -20,7 +20,7 @@ using namespace std;
 playlist *Modify(string plname, int list, playlist *head[], song *head_song){
 	bool check = false;
 	int match;
-	playlist *current_playlist,*previous_playlist, *head_playlist, *tmp_playlist=new playlist;
+	playlist *current_playlist,*previous_playlist, *tmp_playlist=new playlist;
 	song *current_song=head_song;
 
 	char userchoice;

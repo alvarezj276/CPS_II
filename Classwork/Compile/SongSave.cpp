@@ -18,21 +18,27 @@ using namespace std;
 #include "SongHeader.h"
 
 
-void Save(playlist *head[], string name, int list) {
+void Save(playlist *head[], string name,string playlistname, int list) {
 
 
 	playlist *current;
-	name += ".txt";
 	bool valid_name=false;
-	for(int i=0;i<list;i++){
-		if(head[i]->name==name){
+	cout << "save" << endl;
+	for(int i=0;i<5;i++)
+	{
+		if(head[i]==NULL)
+			break;
+		if(playlistname == head[i]->name){
 			current=head[i];
 			valid_name=true;
+			break;
 		}
 	}
+	name += ".txt";
 	if(valid_name){
 		ofstream outFile;
 		outFile.open(name);
+		cout << "file out" << endl;
 		if(current==NULL)
 			outFile<<"Playlist empty"<<endl;
 		else{

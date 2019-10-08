@@ -43,7 +43,7 @@ playlist *Delete(string plname,int list, playlist *head[] );
 
 void Create(song *songhead, int list, playlist *list_name[]);
 
-void Save(playlist *head[], string name, int list);
+void Save(playlist *head[], string name,string playlistname, int list);
 
 int getCount(playlist *head);
 
