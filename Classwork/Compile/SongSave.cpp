@@ -1,22 +1,13 @@
-/*
- * SongSave.cpp
- *
- *  Created on: Oct 6, 2019
- *      Author: meran
- */
-
-
-
-
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// 		Save()
+//		input 		: a pointer to the head of the play list linked-list and
+//					  name of the play list, name of output file
+//		output		: n/a
+//		description : prints play list content out to a text file
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #include <iostream>
-#include <string>
-#include <iomanip>
 #include <fstream>			// needed for file I/O
-#include <cstdlib>			// needed for exit()
-
-using namespace std;
 #include "SongHeader.h"
-
 
 void Save(playlist *head[], string name,string playlistname, int list) {
 
@@ -37,7 +28,7 @@ void Save(playlist *head[], string name,string playlistname, int list) {
 	name += ".txt";
 	if(valid_name){
 		ofstream outFile;
-		outFile.open(name);
+		//outFile.open(name);
 		cout << "file out" << endl;
 		if(current==NULL)
 			outFile<<"Playlist empty"<<endl;

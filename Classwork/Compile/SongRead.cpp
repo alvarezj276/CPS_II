@@ -1,17 +1,13 @@
-/*
- * SongRead.cpp
- *
- *  Created on: Oct 6, 2019
- *      Author: meran
- */
-
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// 		Read()
+//		input 		: n/a
+//		output		: a pointer to the head of the song linked-list
+//		description : reads song info from billboard txt file and inputs the info
+//					  to the song linked-list
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #include <iostream>
-#include <string>
-#include <iomanip>
 #include <fstream>			// needed for file I/O
 #include <cstdlib>			// needed for exit()
-
-using namespace std;
 #include "SongHeader.h"
 
 song *Read(){
@@ -36,7 +32,7 @@ song *Read(){
 		getline(inFile, current->artist);
 		inFile >> current->rank; inFile.ignore();
 		inFile >> current->year; inFile.ignore();
-		inFile >> current->decade;//inFile.ignore();
+		inFile >> current->decade;inFile.ignore();
 		inFile >> current->performer; inFile.ignore();
 		inFile >> current->genre; inFile.ignore();
 
@@ -51,10 +47,11 @@ song *Read(){
 			current = current->nextaddr;
 		}
 
-	}while(true);
+	}
+	while(true);
 
 	inFile.close();
 
-	return (head);
+	return(head);
 }
 

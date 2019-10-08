@@ -1,23 +1,17 @@
-/*
- * SongModify.cpp
- *
- *  Created on: Oct 6, 2019
- *      Author: meran
- */
-
-
-
-
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// 		Modify()
+//		input 		: a pointer to the head of the play list linked-list and
+//					  name of the play list, a pointer to the head of the song
+//					  linked list
+//		output		: a pointer to the head of the play list
+//		description : allows user to insert or delete songs in created play lists
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #include <iostream>
-#include <string>
-#include <iomanip>
-#include <fstream>			// needed for file I/O
-#include <cstdlib>			// needed for exit()
-
-using namespace std;
 #include "SongHeader.h"
 
+
 playlist *Modify(string plname, int list, playlist *head[], song *head_song){
+
 	bool check = false;
 	int match;
 	playlist *current_playlist,*previous_playlist, *tmp_playlist=new playlist;
@@ -27,25 +21,22 @@ playlist *Modify(string plname, int list, playlist *head[], song *head_song){
 	int rank, position;
 
 	for(int i=0;i<5;i++){
-		cout << "test #" << i << endl;
-		cout << "entered playlist name: " << plname << endl;
-		cout << "check :: " << head[i]->name << endl;
-
 		if(plname == head[i]->name){
-			cout << "test" << endl;
 			current_playlist=head[i];
 			match =i;
 			check=true;
 			break;
 		}
 	}
-//	if(check){
 		while(check)
 		{
+
+			Display(head, list, plname);
 			cout << "Insert (I) or Delete (D): "; cin >> userchoice;
 			switch(userchoice)
 			{
 			case 'I':
+			case 'i':
 				cout << "Enter the Rank of the song you would like added to the playlist: "; cin >>rank;
 				if(rank<10)
 					cin.ignore();
@@ -57,14 +48,6 @@ playlist *Modify(string plname, int list, playlist *head[], song *head_song){
 						break;
 					current_song=current_song->nextaddr;
 				}
-//				new_song->name = current_song->name;
-//				new_song->artist = current_song->artist;
-//				new_song->rank = current_song->rank;
-//				new_song->year = current_song->year;
-//				new_song->decade = current_song->decade;
-//				new_song->performer = current_song->performer;
-//				new_song->genre = current_song->genre;
-
 				if (position==1)
 				{
 					tmp_playlist->item=current_song;
@@ -78,6 +61,7 @@ playlist *Modify(string plname, int list, playlist *head[], song *head_song){
 						while(current_playlist->nextaddr != NULL)
 							current_playlist=current_playlist->nextaddr;
 						current_playlist->nextaddr=tmp_playlist;
+						tmp_playlist->item = current_song;  //here
 						tmp_playlist->nextaddr=NULL;
 					}
 					else
@@ -86,21 +70,19 @@ playlist *Modify(string plname, int list, playlist *head[], song *head_song){
 							previous_playlist = current_playlist;
 							current_playlist = current_playlist->nextaddr;
 						}
-						current_song->nextaddr = current_playlist->item;
-						previous_playlist->item->nextaddr = current_song;
-
+						tmp_playlist->nextaddr=current_playlist;
+						tmp_playlist->item=current_song;
+						previous_playlist->nextaddr=tmp_playlist;
 					}
 				}
 				check = false;
 				break;
 			case 'D':
+			case 'd':
 				cout << "Enter the position of the song you would like deleted: "; cin >>position;
 
 				if (position==1)
 				{
-//					if(current_playlist->nextaddr==NULL)
-//						delete(head[match]);
-//					else
 						head[match] = head[match]->nextaddr;
 				}
 				else
@@ -118,9 +100,6 @@ playlist *Modify(string plname, int list, playlist *head[], song *head_song){
 			}
 		}
 		return head[match];
-//	}
-//	else{
 		cout << "Name does not match available playlists"<<endl;
 		return NULL;
-//	}
 }

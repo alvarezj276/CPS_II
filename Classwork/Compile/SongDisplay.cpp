@@ -1,18 +1,12 @@
-/*
- * SongDisplay.cpp
- *
- *  Created on: Oct 6, 2019
- *      Author: meran
- */
-
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// 		Display()
+//		input 		: a pointer to the head of the play list linked-list and
+//					  name of the play list
+//		output		: n/a
+//		description : displays songs in specific play lists
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #include <iostream>
-#include <string>
 #include <iomanip>
-#include <fstream>			// needed for file I/O
-#include <cstdlib>			// needed for exit()
-
-using namespace std;
-
 #include "SongHeader.h"
 
 void Display(playlist *head[], int list, string plname){
@@ -23,38 +17,26 @@ void Display(playlist *head[], int list, string plname){
 	{
 		if(head[i]==NULL)
 			break;
-		cout << "test #" << i << endl;
-		cout << "entered playlist name: " << plname << endl;
-//		cout << "check :: " << head[i]->name << endl;
-
 		if(plname == head[i]->name){
-			cout << "test" << endl;
 			current=head[i];
-
 			check=true;
 			break;
 		}
 	}
-
-
-
 	if (check){
-		cout << plname<< ":\n____________________________________\n";
+		cout << plname<< ":\n________________________________________________________________________\n";
 		if(current==NULL)
 			cout<<"Playlist empty"<<endl;
 		else{
 			int i=1;
 			while(current != NULL){
 
-				cout << "#" << i << "." << endl;
+				cout << "SONG #" << i << "." << endl;
 				cout << "Song: "<< current->item->name << endl;
 				cout << "Artist: " << current->item->artist<< endl;
-				cout << "Billboard Ranking (#): " << current->item->rank<< endl;
-				cout << "Year of Release: " << current->item->year << endl;
-				cout << "Song Decade: " << current->item->decade<< endl;
-				cout << "Song Performer: " << current->item->performer<< endl;
-				cout << "Song Genre (#): " << current->item->genre << endl;
-				cout << "------------------------------------\n";
+				cout << "Billboard Ranking (#)" << " | " << "Year of Release" << " | " << "Song Decade" << " | " << "Performer Type" << " | " << "Genre" << endl;
+				cout << setw(10) <<current->item->rank  << setw(24) << current->item->year << setw(16) << current->item->decade  << setw(14)<<current->item->performer  << setw(12)<<current->item->genre << endl;
+				cout << "------------------------------------------------------------------------------\n";
 
 				current = current->nextaddr;
 				i++;
@@ -62,11 +44,6 @@ void Display(playlist *head[], int list, string plname){
 		}
 	}
 	else{
-		cout << "Playlist name not found" << endl;
-		//current = current->nextaddr;
+		cout << "PLAYLIST NOT FOUND PLEASE TRY AGAIN" << endl;
 	}
 }
-
-
-
-

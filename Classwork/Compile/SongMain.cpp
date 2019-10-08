@@ -1,3 +1,8 @@
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// 		Main()
+//		description : Allows a user to create, and modify play list
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 #include <iostream>
 #include <string>
 #include <iomanip>
@@ -20,6 +25,7 @@ int getCount(playlist *head){
 void Create(song *songhead, int list, playlist *list_name[]){
 	/*
 	 * Inputs: list size, playlists array, songs *head
+	 * Description: creates playlist according to user choices
 	 */
 	char select;
 	const int PLAYLIST_SIZE=200;
@@ -230,7 +236,6 @@ void Create(song *songhead, int list, playlist *list_name[]){
 
 int main(){
 
-	//int list=-1;
 	playlist *list_name[5];
 
 	string filename, playlistname;
@@ -239,44 +244,53 @@ int main(){
 
 	song *main_head;
 
-	//	playlist *playlistmain_head;
-
 	main_head = Read();
 
 	list = -1;
 
+	cout << "WELCOME TO MATTHEWS & PEDRO PLAYLIST EDITOR" << endl;
+
 	while(end)
 	{
 		cout << "Playlist Creater Menu:" << endl;
-		cout << right << setw(4) << "(C)reate" << right  << setw(4) << "(P)review" <<  setw(4) << "(M)odify" << endl;
-		cout << right << setw(4) << "(S)ave" << right  << setw(4) << "(D)elete" << setw(4) << "(Q)uit" << endl;
-		cout << "Option....... : " << endl;
+		cout << right << setw(5) << "(C)reate"  << setw(15) << "(P)review" <<  setw(15) << "(M)odify" << endl;
+		cout << right << setw(5) << "(S)ave " << setw(15) << "(D)elete" << setw(14) << "(Q)uit" << endl;
+		cout << "Option....... : ";
 
 		cin >> userinput; cin.ignore();
 
 		switch(userinput)
 		{
 		case 'C':
+		case 'c':
 			//create
 			list++;
 			Create(main_head, list, list_name);
 			break;
 		case 'P':
+		case 'p':
+			//display
 			cout << "enter playlist name: ";
 			getline(cin,playlistname);
 			Display(list_name, list, playlistname);
 			break;
 		case 'M':
+		case 'm':
+			//modify
 			cout << "enter playlist name: ";
 			getline(cin,playlistname);
-			Modify(playlistname,list, list_name,main_head);
+			Modify(playlistname, list, list_name, main_head);
 			break;
 		case 'D':
+		case 'd':
+			//delete
 			cout << "Delete Playlist : ";
 			getline(cin,playlistname);
 			Delete(playlistname, list , list_name);
 			break;
 		case 'S':
+		case 's':
+			//save
 			cout << "enter playlist name: ";
 			getline(cin,playlistname);
 			cout << "enter file name: "; cin >> filename;
@@ -284,14 +298,13 @@ int main(){
 			break;
 
 		case 'Q':
+		case 'q':
 			cout << "Have a Nice Day" << endl;
 			end = false;
 			break;
 		default :
-			cout << "Invalid , please enter one of the following : " << endl;
+			cout << "Invalid, please enter one of the following : " << endl;
 		}
 	}
 
 }
-
-
