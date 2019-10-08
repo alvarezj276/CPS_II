@@ -37,7 +37,7 @@ void Display(playlist *head[], int list, string plname);
 
 song *Read();
 
-playlist *Modify(string plname,int list, playlist *head[] );
+playlist *Modify(string plname,int list, playlist *head[], song *head_song);
 
 playlist *Delete(string plname,int list, playlist *head[] );
 
@@ -45,6 +45,6 @@ void Create(song *songhead, int list, playlist *list_name[]);
 
 void Save(playlist *head[], string name, int list);
 
-int getCount(playlist *head){
+int getCount(playlist *head);
 
 #endif /* SONGHEADER_H_ */

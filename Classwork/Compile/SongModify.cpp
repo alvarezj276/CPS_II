@@ -17,11 +17,11 @@
 using namespace std;
 #include "SongHeader.h"
 
-playlist *Modify(string plname, int list, playlist *head[]){
+playlist *Modify(string plname, int list, playlist *head[], song *head_song){
 	bool check = false;
 	int match;
-	playlist *current_playlist,*previous_playlist, *head_playlist, tmp_playlist;
-	song *current_song, *new_song;
+	playlist *current_playlist,*previous_playlist, *head_playlist, *tmp_playlist=new playlist;
+	song *current_song=head_song;
 
 	char userchoice;
 	int rank, position;
@@ -34,13 +34,12 @@ playlist *Modify(string plname, int list, playlist *head[]){
 		if(plname == head[i]->name){
 			cout << "test" << endl;
 			current_playlist=head[i];
-			//			head_playlist=current_playlist;
 			match =i;
 			check=true;
 			break;
 		}
 	}
-	if(check){
+//	if(check){
 		while(check)
 		{
 			cout << "Insert (I) or Delete (D): "; cin >> userchoice;
@@ -48,23 +47,33 @@ playlist *Modify(string plname, int list, playlist *head[]){
 			{
 			case 'I':
 				cout << "Enter the Rank of the song you would like added to the playlist: "; cin >>rank;
+				if(rank<10)
+					cin.ignore();
 				cout << "Enter the position you would like the song placed: "; cin >> position;
-				new_song = new song;
-				new_song->name = current_song->name;
-				new_song->artist = current_song->artist;
-				new_song->rank = current_song->rank;
-				new_song->year = current_song->year;
-				new_song->decade = current_song->decade;
-				new_song->performer = current_song->performer;
-				new_song->genre = current_song->genre;
+				if(position<10)
+					cin.ignore();
+				while(current_song != NULL){
+					if(current_song->rank==rank)
+						break;
+					current_song=current_song->nextaddr;
+				}
+//				new_song->name = current_song->name;
+//				new_song->artist = current_song->artist;
+//				new_song->rank = current_song->rank;
+//				new_song->year = current_song->year;
+//				new_song->decade = current_song->decade;
+//				new_song->performer = current_song->performer;
+//				new_song->genre = current_song->genre;
 
 				if (position==1)
 				{
-					//tmp->nextaddr = current;
-					head[match]->item = new_song;
+					tmp_playlist->item=current_song;
+					tmp_playlist->nextaddr=head[match];
+					tmp_playlist->name=head[match]->name;
+					head[match]=tmp_playlist;
 				}
 				else{
-					if(position==(getCount(head)+1)){
+					if(position==(getCount(head[match])+1)){
 						current_playlist=head[match];
 						while(current_playlist->nextaddr != NULL)
 							current_playlist=current_playlist->nextaddr;
@@ -77,8 +86,8 @@ playlist *Modify(string plname, int list, playlist *head[]){
 							previous_playlist = current_playlist;
 							current_playlist = current_playlist->nextaddr;
 						}
-						new_song->nextaddr = current_playlist->item;
-						previous_playlist->item->nextaddr = new_song;
+						current_song->nextaddr = current_playlist->item;
+						previous_playlist->item->nextaddr = current_song;
 
 					}
 				}
@@ -89,7 +98,10 @@ playlist *Modify(string plname, int list, playlist *head[]){
 
 				if (position==1)
 				{
-					head[match] = current_playlist->nextaddr;
+//					if(current_playlist->nextaddr==NULL)
+//						delete(head[match]);
+//					else
+						head[match] = head[match]->nextaddr;
 				}
 				else
 				{
@@ -106,9 +118,9 @@ playlist *Modify(string plname, int list, playlist *head[]){
 			}
 		}
 		return head[match];
-	}
-	else{
+//	}
+//	else{
 		cout << "Name does not match available playlists"<<endl;
 		return NULL;
-	}
+//	}
 }

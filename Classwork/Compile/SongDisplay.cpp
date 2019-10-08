@@ -21,10 +21,11 @@ void Display(playlist *head[], int list, string plname){
 
 	for(int i=0;i<5;i++)
 	{
-
+		if(head[i]==NULL)
+			break;
 		cout << "test #" << i << endl;
 		cout << "entered playlist name: " << plname << endl;
-		cout << "check :: " << head[i]->name << endl;
+//		cout << "check :: " << head[i]->name << endl;
 
 		if(plname == head[i]->name){
 			cout << "test" << endl;

@@ -42,8 +42,10 @@ void Create(song *songhead, int list, playlist *list_name[]){
 			switch(select){
 			case 'r':
 			case 'R':cout << "Enter song ranking: ";
-			cin >> position; cin.ignore();
-			if(position>PLAYLIST_SIZE){
+			cin >> position;
+			if(position<10)
+				cin.ignore();
+			if(position>PLAYLIST_SIZE && position<1){
 				cout << "Song ranking not valid. Reselect entry-maker" << endl;
 				break;
 			}
@@ -267,7 +269,7 @@ int main(){
 		case 'M':
 			cout << "enter playlist name: ";
 			getline(cin,playlistname);
-			Modify(playlistname,list, list_name);
+			Modify(playlistname,list, list_name,main_head);
 			break;
 		case 'D':
 			cout << "Delete Playlist : ";
