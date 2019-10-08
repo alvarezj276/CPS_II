@@ -54,7 +54,7 @@ playlist *Delete(string plname, int list, playlist *head[]){
 					head[i]=head[i+1];
 			}
 			delete(current);
-			return(head[match]);
+			return head[match];
 		}
 	}
 	else{
