@@ -33,17 +33,29 @@ playlist *Delete(string plname, int list, playlist *head[]){
 
 	if(check){
 		cout << "check start" << endl;
-		if(size==1)
+		if(size==1){
 			head[match]=current->nextaddr;
+			for(int i=match;i<5;i++){
+				if(i+1<5)
+					head[i]=head[i+1];
+			}
+			delete(current);
+			return head[match];
+		}
 		else{
 			for (int i=1; i<size; i++){
 				previous = current;
 				current = current->nextaddr;
+				delete(previous);
 			}
 			head[match] = current->nextaddr;
+			for(int i=match;i<5;i++){
+				if(i+1<5)
+					head[i]=head[i+1];
+			}
+			delete(current);
+			return(head[match]);
 		}
-		delete(current);
-		return(head[match]);
 	}
 	else{
 		cout << "Name does not match available playlists"<<endl;

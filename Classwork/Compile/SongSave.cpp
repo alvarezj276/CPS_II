@@ -28,7 +28,7 @@ void Save(playlist *head[], string name,string playlistname, int list) {
 	name += ".txt";
 	if(valid_name){
 		ofstream outFile;
-		//outFile.open(name);
+		outFile.open(name);
 		cout << "file out" << endl;
 		if(current==NULL)
 			outFile<<"Playlist empty"<<endl;

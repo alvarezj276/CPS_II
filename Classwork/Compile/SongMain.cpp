@@ -34,8 +34,9 @@ void Create(song *songhead, int list, playlist *list_name[]){
 	}
 	else{
 		int position; char checker;
-		playlist *current=new playlist,*head,*next=new playlist;
-		song *tmpcurrent=songhead;
+		playlist *current=new playlist,*head=new playlist,*next=new playlist;
+		song *tmpcurrent= new song;
+		tmpcurrent=songhead;
 		cout << "New Playlist: \nEnter Playlist name: ";
 		getline(cin,current->name);
 		head=current;
