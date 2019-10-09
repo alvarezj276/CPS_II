@@ -13,29 +13,29 @@ void Display(playlist *head[], int list, string plname){
 	playlist *current;
 	bool check = false;
 
-//	for(int i=0;i<5;i++)
-//	{
-//		if(head[i]==NULL)
-//			break;
-//		if(plname == head[i]->name){
+	cout << plname << endl;
+	for(int i=0;i<5;i++)
+	{
+		cout << i << endl;
+		if(head[i]==NULL)
+			break;
+		if(plname == head[i]->name){
+			current=head[i];
+			check=true;
+			cout << "check" << endl;
+			break;
+		}
+	}
+//	int i=0;
+//	cout << plname << endl;
+//	while(i<5 || head[i]!=NULL){
+//		if(plname==head[i]->name){
 //			current=head[i];
 //			check=true;
 //			break;
 //		}
+//		i++;
 //	}
-	int i=0;
-	cout << plname << endl;
-	while(i<5 || head[i]!=NULL){
-		cout << i << endl;
-		if(plname==head[i]->name){
-			current=head[i];
-			check=true;
-			break;
-			cout << "check" << endl;
-		}
-		i++;
-		cout << "i++ :" << i << endl;
-	}
 	if (check){
 		cout << plname<< ":\n________________________________________________________________________\n";
 		if(current==NULL)
