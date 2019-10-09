@@ -21,6 +21,8 @@ playlist *Modify(string plname, int list, playlist *head[], song *head_song){
 	int rank, position;
 
 	for(int i=0;i<5;i++){
+		if(head[i]==NULL)
+			break;
 		if(plname == head[i]->name){
 			current_playlist=head[i];
 			match =i;
