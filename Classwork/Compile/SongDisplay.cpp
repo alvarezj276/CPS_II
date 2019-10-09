@@ -36,6 +36,7 @@ void Display(playlist *head[], int list, string plname){
 //		}
 //		i++;
 //	}
+	cout << "after for" << endl;
 	if (check){
 		cout << plname<< ":\n________________________________________________________________________\n";
 		if(current==NULL)
@@ -59,4 +60,5 @@ void Display(playlist *head[], int list, string plname){
 	else{
 		cout << "PLAYLIST NOT FOUND PLEASE TRY AGAIN" << endl;
 	}
+	cout << "final line" << endl;
 }
