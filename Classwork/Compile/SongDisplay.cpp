@@ -21,9 +21,9 @@ void Display(playlist *head[], int list, string plname){
 //			break;
 //		}
 		if(plname == head[i]->name){
+			cout << "check" << endl;
 			current=head[i];
 			check=true;
-			cout << "check" << endl;
 			break;
 		}
 	}
