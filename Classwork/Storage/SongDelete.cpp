@@ -32,7 +32,6 @@ playlist *Delete(string plname, int list, playlist *head[]){
 	size=getCount(head[match]);
 
 	if(check){
-		cout << "check start" << endl;
 		if(size==1){
 			head[match]=current->nextaddr;
 			for(int i=match;i<5;i++){

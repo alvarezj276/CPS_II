@@ -75,7 +75,7 @@ void Create(song *songhead, int list, playlist *list_name[]){
 			select=' ';
 			break;
 			case 'd':
-			case 'D':cout << "Enter song decade: ";
+			case 'D':cout << "Enter song decade (60, 70, 80, 90, 00, 10): ";
 			cin >> position; //cin.ignore();
 			if(position == 50 || position == 60 || position == 70 || position == 80
 					|| position == 90 || position == 00 || position == 10){
@@ -108,9 +108,9 @@ void Create(song *songhead, int list, playlist *list_name[]){
 			cin.ignore();
 			break;
 			case 'p':
-			case 'P':cout << "Enter performer type: ";
+			case 'P':cout << "Enter performer type (MUST BE CAPITAL M, F, OR D) : ";
 			cin >> checker; cin.ignore();
-			if(checker == 'F' || checker =='M' || checker =='G'){
+			if(checker == 'F' || checker =='M' || checker =='D'){
 				tmpcurrent=songhead;
 				for(int i=0; i<PLAYLIST_SIZE; i++){
 					if(tmpcurrent->performer==checker){

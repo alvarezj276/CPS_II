@@ -63,7 +63,7 @@ playlist *Modify(string plname, int list, playlist *head[], song *head_song){
 						cout << "Error: Song not available at position " << position << endl;
 					}
 					else{
-						if(position==(getCount(head[match])+1))){
+						if(position==(getCount(head[match])+1)){
 							current_playlist=head[match];
 							while(current_playlist->nextaddr != NULL)
 								current_playlist=current_playlist->nextaddr;
