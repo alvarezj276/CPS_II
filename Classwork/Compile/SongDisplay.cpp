@@ -24,13 +24,17 @@ void Display(playlist *head[], int list, string plname){
 //		}
 //	}
 	int i=0;
+	cout << plname << endl;
 	while(i<5 || head[i]!=NULL){
+		cout << i << endl;
 		if(plname==head[i]->name){
 			current=head[i];
 			check=true;
 			break;
+			cout << "check" << endl;
 		}
 		i++;
+		cout << "i++ :" << i << endl;
 	}
 	if (check){
 		cout << plname<< ":\n________________________________________________________________________\n";
