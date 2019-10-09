@@ -59,23 +59,28 @@ playlist *Modify(string plname, int list, playlist *head[], song *head_song){
 					head[match]=tmp_playlist;
 				}
 				else{
-					if(position==(getCount(head[match])+1)){
-						current_playlist=head[match];
-						while(current_playlist->nextaddr != NULL)
-							current_playlist=current_playlist->nextaddr;
-						current_playlist->nextaddr=tmp_playlist;
-						tmp_playlist->item = current_song;  //here
-						tmp_playlist->nextaddr=NULL;
+					if(position >(getCount(head[match])+1)){
+						cout << "Error: Song not available at position " << position << endl;
 					}
-					else
-					{
-						for (int i=1; i<position; i++){
-							previous_playlist = current_playlist;
-							current_playlist = current_playlist->nextaddr;
+					else{
+						if(position==(getCount(head[match])+1))){
+							current_playlist=head[match];
+							while(current_playlist->nextaddr != NULL)
+								current_playlist=current_playlist->nextaddr;
+							current_playlist->nextaddr=tmp_playlist;
+							tmp_playlist->item = current_song;  //here
+							tmp_playlist->nextaddr=NULL;
 						}
-						tmp_playlist->nextaddr=current_playlist;
-						tmp_playlist->item=current_song;
-						previous_playlist->nextaddr=tmp_playlist;
+						else
+						{
+							for (int i=1; i<position; i++){
+								previous_playlist = current_playlist;
+								current_playlist = current_playlist->nextaddr;
+							}
+							tmp_playlist->nextaddr=current_playlist;
+							tmp_playlist->item=current_song;
+							previous_playlist->nextaddr=tmp_playlist;
+						}
 					}
 				}
 				check = false;
