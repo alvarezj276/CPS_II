@@ -17,17 +17,15 @@ void Display(playlist *head[], int list, string plname){
 	for(int i=0;i<5;i++)
 	{
 		cout << i << endl;
-		if(head[i]==NULL){
-			cout << "big fuckin' error" << endl;
-			break;
-		}
+//		if(head[i]==NULL){
+//			break;
+//		}
 		if(plname == head[i]->name){
 			current=head[i];
 			check=true;
 			cout << "check" << endl;
 			break;
 		}
-		cout << "end " << i << endl;
 	}
 //	int i=0;
 //	cout << plname << endl;
