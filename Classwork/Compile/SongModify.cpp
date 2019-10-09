@@ -21,6 +21,8 @@ playlist *Modify(string plname, int list, playlist *head[], song *head_song){
 	int rank, position;
 
 	for(int i=0;i<5;i++){
+		if(head[i]==NULL)
+			break;
 		if(plname == head[i]->name){
 			current_playlist=head[i];
 			match =i;
@@ -28,6 +30,7 @@ playlist *Modify(string plname, int list, playlist *head[], song *head_song){
 			break;
 		}
 	}
+	if(check){
 		while(check)
 		{
 
@@ -56,23 +59,28 @@ playlist *Modify(string plname, int list, playlist *head[], song *head_song){
 					head[match]=tmp_playlist;
 				}
 				else{
-					if(position==(getCount(head[match])+1)){
-						current_playlist=head[match];
-						while(current_playlist->nextaddr != NULL)
-							current_playlist=current_playlist->nextaddr;
-						current_playlist->nextaddr=tmp_playlist;
-						tmp_playlist->item = current_song;  //here
-						tmp_playlist->nextaddr=NULL;
+					if(position >(getCount(head[match])+1)){
+						cout << "Error: Song not available at position " << position << endl;
 					}
-					else
-					{
-						for (int i=1; i<position; i++){
-							previous_playlist = current_playlist;
-							current_playlist = current_playlist->nextaddr;
+					else{
+						if(position==(getCount(head[match])+1))){
+							current_playlist=head[match];
+							while(current_playlist->nextaddr != NULL)
+								current_playlist=current_playlist->nextaddr;
+							current_playlist->nextaddr=tmp_playlist;
+							tmp_playlist->item = current_song;  //here
+							tmp_playlist->nextaddr=NULL;
 						}
-						tmp_playlist->nextaddr=current_playlist;
-						tmp_playlist->item=current_song;
-						previous_playlist->nextaddr=tmp_playlist;
+						else
+						{
+							for (int i=1; i<position; i++){
+								previous_playlist = current_playlist;
+								current_playlist = current_playlist->nextaddr;
+							}
+							tmp_playlist->nextaddr=current_playlist;
+							tmp_playlist->item=current_song;
+							previous_playlist->nextaddr=tmp_playlist;
+						}
 					}
 				}
 				check = false;
@@ -87,12 +95,18 @@ playlist *Modify(string plname, int list, playlist *head[], song *head_song){
 				}
 				else
 				{
-					for (int i=1; i<position; i++)
-					{
-						previous_playlist = current_playlist;
-						current_playlist = current_playlist->nextaddr;
+					if(position > getCount(head[match])){
+						cout << "Error: Song not found at position " << position << endl;
+						break;
 					}
-					previous_playlist->nextaddr = current_playlist->nextaddr;
+					else{
+						for (int i=1; i<position; i++)
+						{
+							previous_playlist = current_playlist;
+							current_playlist = current_playlist->nextaddr;
+						}
+						previous_playlist->nextaddr = current_playlist->nextaddr;
+					}
 				}
 				delete(current_playlist);
 				check = false;
@@ -100,6 +114,9 @@ playlist *Modify(string plname, int list, playlist *head[], song *head_song){
 			}
 		}
 		return head[match];
+	}
+	else{
 		cout << "Name does not match available playlists"<<endl;
 		return NULL;
+	}
 }
