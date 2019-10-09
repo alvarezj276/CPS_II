@@ -50,6 +50,8 @@ playlist *Delete(string plname, int list, playlist *head[]){
 			}
 			head[match] = current->nextaddr;
 			for(int i=match;i<5;i++){
+				if(head[i]==head[match])
+					head[i]=NULL;
 				if(i+1<5)
 					head[i]=head[i+1];
 			}
