@@ -17,6 +17,7 @@ class Circle{
 	public: Circle(float=0.0);
 		void ShowArea();
 		void SetRadius(float);
+		float CalCircumference();
 };
 
 Circle::Circle(float r){
@@ -27,7 +28,7 @@ Circle::Circle(float r){
 
 void Circle::ShowArea(){
 	cout << "R = " << fixed << setprecision(2) << radius <<
-			" Area = " << setprecision(2) << area << "\n";
+			" Area = " << setprecision(2) << area << endl;
 }
 
 void Circle::SetRadius(float r){
@@ -35,6 +36,13 @@ void Circle::SetRadius(float r){
 	radius=r;
 	area=pi*pow(r,2.0);
 }
+
+float Circle::CalCircumference(){
+	float pi=3.141592;
+	float circumference=pi*2*radius;
+	return circumference;
+}
+
 int main(){
 	Circle c1(5.0),c2,c3;
 
@@ -46,5 +54,12 @@ int main(){
 	c3=c1;
 	c3.ShowArea();
 
+	float tmp=c1.CalCircumference();
+	cout << "Circumference of c1: " << fixed << setprecision(2) << tmp << endl;
+	float tmp2=c2.CalCircumference();
+	cout << "Circumference of c2: " << fixed << setprecision(2) << tmp2 << endl;
+
 	return 0;
 }
+
+
