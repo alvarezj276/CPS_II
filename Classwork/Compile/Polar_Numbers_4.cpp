@@ -114,20 +114,17 @@ int main()
 	PolarNumber A (25.0, -45.0), B (-35.0, 68.0);
 	PolarNumber C;
 
-//	cout << "(A) "; A.displayPolarNumber();
-//	cout << "(B) "; B.displayPolarNumber();
+	cout << "(A) "; A.displayPolarNumber();
+	cout << "(B) "; B.displayPolarNumber();
 
-//	C = A * B;
-//
-//	cout << "(C*) "; C.displayPolarNumber();
-//
-//	C = A / B;
-//
-//	cout << "(C/) "; C.displayPolarNumber();
+	C = A * B;
 
-//	C = A + B;
-//
-//	cout << "(C+) "; C.displayPolarNumber();
+	cout << "(C*) "; C.displayPolarNumber();
+
+	C = A / B;
+
+	cout << "(C/) "; C.displayPolarNumber();
+
 	Display();
 
 	return 0;;
