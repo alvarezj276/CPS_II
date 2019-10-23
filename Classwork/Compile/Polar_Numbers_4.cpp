@@ -44,6 +44,7 @@ class PolarNumber
 //		PolarNumber operator*(const PolarNumber&);
 		PolarNumber operator/(PolarNumber);
 		PolarNumber operator+(const PolarNumber&);
+		PolarNumber operator-(const PolarNumber&);
 		friend void Display();
 };
 
@@ -77,6 +78,22 @@ PolarNumber PolarNumber::operator +(const PolarNumber& X){
 	x+=r2*cos(theta2*PI/180);
 	y=r1*sin(theta1*PI/180);
 	y+=r2*sin(theta2*PI/180);
+
+	ans.magnitude = sqrt(pow(x,2.0)+pow(y,2.0));
+	ans.angle = atan2(y,x)*180.0/PI;
+
+	return ans;
+};
+
+PolarNumber PolarNumber::operator -(const PolarNumber& X){
+	const float PI=3.14159;
+	float r1=magnitude, theta1=angle, r2=X.magnitude, theta2=X.angle, x, y;
+	PolarNumber ans;
+
+	x=r1*cos(theta1*PI/180);
+	x-=r2*cos(theta2*PI/180);
+	y=r1*sin(theta1*PI/180);
+	y-=r2*sin(theta2*PI/180);
 
 	ans.magnitude = sqrt(pow(x,2.0)+pow(y,2.0));
 	ans.angle = atan2(y,x)*180.0/PI;
