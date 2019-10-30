@@ -29,7 +29,7 @@ public:
 	void setCoefficient(float m,float l, float p);
 	void displayLine();
 	void lineSlope();
-	void lineIntersection(lineType);
+	void lineIntersection(lineType X, lineType Y);
 
 	bool operator==(lineType);
 	bool operator||(lineType);
@@ -53,7 +53,7 @@ void lineType::displayLine(){
 		absolute=abs(b);
 		sign='-';
 	}
-	cout << sign << absolute <<"y = " << c;
+	cout << sign << ' ' << absolute <<"y = " << c;
 }
 
 void lineType::lineSlope(){
@@ -63,16 +63,16 @@ void lineType::lineSlope(){
 	else cout << -a/b << endl;
 }
 
-void lineType::lineIntersection(lineType X){
+void lineType::lineIntersection(lineType X, lineType Y){
 	float x,y;
 	string ytmp=" undefined";
 	cout<< fixed << setprecision(2);
 	cout << "x = ";
-	if(( a!=0 && X.b!=0) || ( b!=0 || X.a!=0)){
-		x=(( c*X.b)-(X.c* b))/(( a*X.b)-(X.a* b));
+	if(( X.a!=0 && Y.b!=0) || ( X.b!=0 || Y.a!=0)){
+		x=(( X.c*Y.b)-(Y.c* X.b))/(( X.a*Y.b)-(Y.a* X.b));
 		cout << x << endl;
-		if(X.b!=0){
-			y=(X.c/X.b)-((X.a/X.b)*x);
+		if(Y.b!=0){
+			y=(Y.c/Y.b)-((Y.a/Y.b)*x);
 			ytmp= " "+to_string(y);
 		}
 	}
@@ -87,6 +87,7 @@ bool lineType::operator ==(lineType X){
 		equal=true;
 	if((fmod(a,X.a)==0) && (fmod(b,X.b)==0) && (fmod(c,X.c)==0))
 		equal=true;
+	cout << equal;
 	return equal;
 };
 
@@ -99,6 +100,7 @@ bool lineType::operator ||(lineType X)
 		parallel=true;
 	if((-X.a)/X.b == -a/b)
 		parallel=true;
+	cout << parallel;
 	return parallel;
 };
 
@@ -110,6 +112,7 @@ bool lineType::operator &&(lineType X)
 		perpendicular=true;
 	if((-X.a/X.b)*(-a/b)==-1)
 		perpendicular=true;
+	cout << perpendicular;
 	return perpendicular;
 };
 
@@ -120,11 +123,11 @@ int main()
 	float a,b,c;
 	char letter,letter2;
 	string e="EQUAL",pa="PARALLEL",per="PERPENDICULAR";
-	bool equal=false,parallel=false,perpendicular=false,quit=false;
-	cout << "|1|Set\n|2|Display\n|3|Slope\n|4|Equal\n|5|Parallel\n|6|Perpendicular\n|7|Intersection\n|8|Quit";
-	cout << "\nSelect an option: ";
-	cin >> option; cin.ignore();
+	bool equal=true,parallel=true,perpendicular=true,quit=false;
 	do{
+		cout << "|1|Set\n|2|Display\n|3|Slope\n|4|Equal\n|5|Parallel\n|6|Perpendicular\n|7|Intersection\n|8|Quit";
+		cout << "\nSelect an option: ";
+		cin >> option; cin.ignore();
 		switch(option){
 		case 1:
 				cout << "|W|   |X|   |Y|   |Z|\nSelect line: ";
@@ -137,14 +140,14 @@ int main()
 					tmp=Y;
 				if(letter=='Z'||letter=='z')
 					tmp=Z;
-			cout << "Enter coefficient a: ";
-			cin >> a;
-			cout << "Enter coefficient b: ";
-			cin >> b;
-			cout << "Enter coefficient c: ";
-			cin >> c;
-			tmp.setCoefficient(a,b,c);
-			break;
+				cout << "Enter coefficient a: ";
+				cin >> a;
+				cout << "Enter coefficient b: ";
+				cin >> b;
+				cout << "Enter coefficient c: ";
+				cin >> c;
+				tmp.setCoefficient(a,b,c);
+				break;
 		case 2:
 				cout << "|W|   |X|   |Y|   |Z|\nSelect line: ";
 				cin >> letter; cin.ignore();
@@ -156,6 +159,7 @@ int main()
 					X.displayLine();
 				if(letter=='Z'||letter=='z')
 					Z.displayLine();
+				cout << endl;
 			break;
 		case 3:
 				cout << "|W|   |X|   |Y|   |Z|\nSelect line: ";
@@ -190,10 +194,10 @@ int main()
 					tmp2=Y;
 				if(letter2=='Z'||letter2=='z')
 					tmp2=Z;
-				equal=tmp==tmp2;
-				if(!equal)
-					e="NOT"+e;
-				cout << letter << " and " << letter2 << e << endl;
+				equal=(tmp==tmp2);
+				if(equal==false)
+					e="NOT "+e;
+				cout << letter << " and " << letter2  << " are " << e << endl;
 			break;
 		case 5:
 				cout << "|W|   |X|   |Y|   |Z|\nSelect line 1: ";
@@ -219,7 +223,7 @@ int main()
 				parallel=tmp||tmp2;
 				if(!parallel)
 					e="NOT"+pa;
-				cout << letter << " and " << letter2 << pa << endl;
+				cout << letter << " and " << letter2  << " are " << pa << endl;
 			break;
 		case 6:
 				cout << "|W|   |X|   |Y|   |Z|\nSelect line 1: ";
@@ -245,7 +249,7 @@ int main()
 				perpendicular=tmp&&tmp2;
 				if(!perpendicular)
 					e="NOT"+per;
-				cout << letter << " and " << letter2 << per << endl;
+				cout << letter << " and " << letter2  << " are " << per << endl;
 			break;
 		case 7:
 				cout << "|W|   |X|   |Y|   |Z|\nSelect line 1: ";
@@ -270,7 +274,7 @@ int main()
 					tmp2=Z;
 				parallel=tmp||tmp2;
 				if(!parallel)
-					tmp.lineIntersection(tmp2);
+					tmp.lineIntersection(tmp,tmp2);
 			break;
 		case 8:
 			quit=true;
