@@ -80,18 +80,22 @@ void lineType::lineIntersection(lineType X, lineType Y){
 	cout << "y =" << ytmp << endl;
 }
 
-bool lineType::operator ==(lineType X){
+bool lineType::operator ==(const lineType X){
 	bool equal=false;
 
-	if((X.a==a) && (X.b==b) && (X.c==c))
+	if((X.a==a) && (X.b==b) && (X.c==c)){
 		equal=true;
-	if((fmod(a,X.a)==0) && (fmod(b,X.b)==0) && (fmod(c,X.c)==0))
+		cout << "==1"<<endl;
+	}
+	if((fmod(a,X.a)==0) && (fmod(b,X.b)==0) && (fmod(c,X.c)==0)){
 		equal=true;
+		cout << "==2" << endl;
+	}
 	cout << equal;
 	return equal;
 };
 
-bool lineType::operator ||(lineType X)
+bool lineType::operator ||(const lineType X)
 {
 	bool parallel=false;
 
@@ -104,7 +108,7 @@ bool lineType::operator ||(lineType X)
 	return parallel;
 };
 
-bool lineType::operator &&(lineType X)
+bool lineType::operator &&(const lineType X)
 {
 	bool perpendicular=false;
 
