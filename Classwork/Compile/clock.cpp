@@ -1,7 +1,7 @@
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Title: clock.cpp
 // Course: Computational Problem Solving CPET-II
-// Developer: Matthew Chu
+// Developer: MATTHEW CHU
 // Date : Fall 2019 (2191)
 // Description: Project #6
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -182,7 +182,7 @@ public:
 			second++;
 		}
 	};
-	operator clock_12();
+//	operator clock_12();
 };
 
 class clock_12{
@@ -232,43 +232,43 @@ public:
 			cout << setw(2) << "PM" << endl;
 		return time_out;
 	};
-	operator clock_18();
+//	operator clock_18();
 };
 
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Name: clock_12
-// Input: none
-// Output : clock_12
-// Purpose: converts clock_18 to clock_12
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-clock_18::operator clock_12(){
-	int h=hour;
-	int m=minute;
-	int s=second;
-	char t='a';
-	if(hour >= 12){
-		t='p';
-		if(hour>12)
-			h=hour-12;
-	}
-	return (clock_12(h,m,s,t));
-};
+//// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//// Name: clock_12
+//// Input: none
+//// Output : clock_12
+//// Purpose: converts clock_18 to clock_12
+//// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//clock_18::operator clock_12(){
+//	int h=hour;
+//	int m=minute;
+//	int s=second;
+//	char t='a';
+//	if(hour >= 12){
+//		t='p';
+//		if(hour>12)
+//			h=hour-12;
+//	}
+//	return (clock_12(h,m,s,t));
+//};
 
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Name: clock_18
-// Input: none
-// Output : clock_18
-// Purpose: converts clock_12 to clock_18
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-clock_12::operator clock_18(){
-	int h=hour;
-	int m=minute;
-	int s=second;
-	if(meridiem=='p')
-		if(hour > 12)
-			h=hour+12;
-	return (clock_18(h,m,s));
-};
+//// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//// Name: clock_18
+//// Input: none
+//// Output : clock_18
+//// Purpose: converts clock_12 to clock_18
+//// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//clock_12::operator clock_18(){
+//	int h=hour;
+//	int m=minute;
+//	int s=second;
+//	if(meridiem=='p')
+//		if(hour > 12)
+//			h=hour+12;
+//	return (clock_18(h,m,s));
+//};
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Name: main
@@ -279,7 +279,7 @@ clock_12::operator clock_18(){
 int main(){
 	long t;
 	clock_18 startTime,endTime,watchStart,watchEnd,timer;
-	clock_12 watchStart_12, watchEnd_12;
+//	clock_12 watchStart_12, watchEnd_12;
 	bool clock=true;
 	do{
 		cout << "Enter start time: ";
@@ -295,11 +295,11 @@ int main(){
 				&& (long(watchEnd) < long(endTime)) && (long(watchEnd) > long(startTime))){
 			while(startTime!=endTime){
 				long start=long(startTime);
-				if(start < long(watchStart))
+				if(startTime < watchStart)
 					cout << "Sleeping | " ;
-				if((start >= long(watchStart)) && (start<= watchEnd))
+				if((start >= long(watchStart)) && (start <= (watchEnd)))
 					cout << "On Watch | " ;
-				if(start > long(watchEnd))
+				if(startTime > watchEnd)
 					cout << "Off-Duty | " ;
 				cout << startTime;
 				++startTime;

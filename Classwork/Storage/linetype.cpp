@@ -1,5 +1,5 @@
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Title: tinetype.cpp
+// Title: linetype.cpp
 // Course: Computational Problem Solving CPET-II
 // Developer: Matthew Chu
 // Date : Fall 2019 (2191)
@@ -21,6 +21,12 @@ private:
 	float c;
 
 public:
+	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	// Name: lineType
+	// Input: float hour, float minute, float second
+	// Output : none
+	// Purpose: construct line with a,b,c
+	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	lineType(float m=1.0, float l=1.0, float p=1.0){
 		a=m;
 		b=l;
@@ -37,12 +43,24 @@ public:
 
 };
 
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Name: setCoefficient
+// Input: float hour, float minute, float second
+// Output : none
+// Purpose: set line with a,b,c
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void lineType::setCoefficient(float m, float l, float p){
 	a=m;
 	b=l;
 	c=p;
 };
 
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Name: displayLine
+// Input: none
+// Output : none
+// Purpose: display line in standard form
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void lineType::displayLine(){
 
 	float absolute= b;
@@ -56,6 +74,12 @@ void lineType::displayLine(){
 	cout << sign << ' ' << absolute <<"y = " << c;
 }
 
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Name: lineSlope
+// Input: none
+// Output : none
+// Purpose: displays slope of line
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void lineType::lineSlope(){
 	cout << "slope = ";
 	if(a==0) cout << 0 << endl;
@@ -63,6 +87,12 @@ void lineType::lineSlope(){
 	else cout << -a/b << endl;
 }
 
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Name: lineIntersection
+// Input: lineType X, lineType Y
+// Output : none
+// Purpose: determines and displays intersection between lines
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void lineType::lineIntersection(lineType X, lineType Y){
 	float x,y;
 	string ytmp=" undefined";
@@ -80,34 +110,47 @@ void lineType::lineIntersection(lineType X, lineType Y){
 	cout << "y =" << ytmp << endl;
 }
 
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Name: operator ==
+// Input: const lineType X
+// Output : bool equal
+// Purpose: determines if lines are equal
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 bool lineType::operator ==(const lineType X){
 	bool equal=false;
 
 	if((X.a==a) && (X.b==b) && (X.c==c)){
 		equal=true;
-		cout << "==1"<<endl;
 	}
 	if((fmod(a,X.a)==0) && (fmod(b,X.b)==0) && (fmod(c,X.c)==0)){
 		equal=true;
-		cout << "==2" << endl;
 	}
-	cout << equal;
 	return equal;
 };
 
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Name: operator ||
+// Input: const lineType X
+// Output : bool parallel
+// Purpose: determines if lines are parallel
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 bool lineType::operator ||(const lineType X)
 {
 	bool parallel=false;
 
-	if((X.a==0 && a==0) ||
-			(X.b==0 && b==0))
+	if((X.a==0 && a==0) || (X.b==0 && b==0))
 		parallel=true;
-	if((-X.a)/X.b == -a/b)
+	if(X.a==a)
 		parallel=true;
-	cout << parallel;
 	return parallel;
 };
 
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Name: operator &&
+// Input: const lineType X
+// Output : bool perpendicular
+// Purpose: determines if lines are perpendicular
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 bool lineType::operator &&(const lineType X)
 {
 	bool perpendicular=false;
@@ -116,19 +159,24 @@ bool lineType::operator &&(const lineType X)
 		perpendicular=true;
 	if((-X.a/X.b)*(-a/b)==-1)
 		perpendicular=true;
-	cout << perpendicular;
 	return perpendicular;
 };
 
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Name: main
+// Input: none
+// Output : none
+// Purpose: runs main code
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 int main()
 {
 	lineType W,X,Y,Z,tmp,tmp2;
 	int option;
 	float a,b,c;
 	char letter,letter2;
-	string e="EQUAL",pa="PARALLEL",per="PERPENDICULAR";
-	bool equal=true,parallel=true,perpendicular=true,quit=false;
+	bool equal=true,parallel=false,perpendicular=false,quit=false;
 	do{
+		string e="EQUAL",pa="PARALLEL",per="PERPENDICULAR";
 		cout << "|1|Set\n|2|Display\n|3|Slope\n|4|Equal\n|5|Parallel\n|6|Perpendicular\n|7|Intersection\n|8|Quit";
 		cout << "\nSelect an option: ";
 		cin >> option; cin.ignore();
@@ -136,21 +184,42 @@ int main()
 		case 1:
 				cout << "|W|   |X|   |Y|   |Z|\nSelect line: ";
 				cin >> letter; cin.ignore();
-				if(letter=='W'||letter=='w')
-					tmp=W;
-				if(letter=='X'||letter=='x')
-					tmp=X;
-				if(letter=='Y'||letter=='y')
-					tmp=Y;
-				if(letter=='Z'||letter=='z')
-					tmp=Z;
-				cout << "Enter coefficient a: ";
-				cin >> a;
-				cout << "Enter coefficient b: ";
-				cin >> b;
-				cout << "Enter coefficient c: ";
-				cin >> c;
-				tmp.setCoefficient(a,b,c);
+				if(letter=='W'||letter=='w'){
+					cout << "Enter coefficient a: ";
+					cin >> a;
+					cout << "Enter coefficient b: ";
+					cin >> b;
+					cout << "Enter coefficient c: ";
+					cin >> c;
+					W.setCoefficient(a,b,c);
+				}
+				if(letter=='X'||letter=='x'){
+					cout << "Enter coefficient a: ";
+					cin >> a;
+					cout << "Enter coefficient b: ";
+					cin >> b;
+					cout << "Enter coefficient c: ";
+					cin >> c;
+					X.setCoefficient(a,b,c);
+				}
+				if(letter=='Y'||letter=='y'){
+					cout << "Enter coefficient a: ";
+					cin >> a;
+					cout << "Enter coefficient b: ";
+					cin >> b;
+					cout << "Enter coefficient c: ";
+					cin >> c;
+					Y.setCoefficient(a,b,c);
+				}
+				if(letter=='Z'||letter=='z'){
+					cout << "Enter coefficient a: ";
+					cin >> a;
+					cout << "Enter coefficient b: ";
+					cin >> b;
+					cout << "Enter coefficient c: ";
+					cin >> c;
+					Z.setCoefficient(a,b,c);
+				}
 				break;
 		case 2:
 				cout << "|W|   |X|   |Y|   |Z|\nSelect line: ";
@@ -224,9 +293,9 @@ int main()
 					tmp2=Y;
 				if(letter2=='Z'||letter2=='z')
 					tmp2=Z;
-				parallel=tmp||tmp2;
-				if(!parallel)
-					e="NOT"+pa;
+				parallel=(tmp||tmp2);
+				if(parallel==0)
+					pa="NOT "+pa;
 				cout << letter << " and " << letter2  << " are " << pa << endl;
 			break;
 		case 6:
@@ -251,8 +320,8 @@ int main()
 				if(letter2=='Z'||letter2=='z')
 					tmp2=Z;
 				perpendicular=tmp&&tmp2;
-				if(!perpendicular)
-					e="NOT"+per;
+				if(perpendicular==false)
+					per="NOT "+per;
 				cout << letter << " and " << letter2  << " are " << per << endl;
 			break;
 		case 7:
@@ -277,7 +346,7 @@ int main()
 				if(letter2=='Z'||letter2=='z')
 					tmp2=Z;
 				parallel=tmp||tmp2;
-				if(!parallel)
+				if(parallel==false)
 					tmp.lineIntersection(tmp,tmp2);
 			break;
 		case 8:
