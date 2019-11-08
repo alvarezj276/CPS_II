@@ -1,9 +1,9 @@
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Title: shapes_base.cpp
+// Title: shapes_complete.cpp
 // Course: Computational Problem Solving CPET-II
-// Developer: Dr G.H. Zion
+// Developer: MATTHEW CHU
 // Date : Fall 2019 (2191)
-// Description : Inheritance - base shape
+// Description: Project #7
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #include <iostream>
 #include <iomanip>
@@ -50,33 +50,33 @@ class Shape
 
 class Rectangle:public Shape{
 protected:
-	float width,height;
+	float width,length;
 public:
-	Rectangle(){ width = 0; height = 0; }
+	Rectangle(){ width = 0; length = 0; }
 
 	void setSides(float w, float h)
 	{
 		width = w;
-		height = h;
+		length = h;
 		return;
 	}
 
 	float calArea()
 	{
-		float area=width*height;
+		float area=width*length;
 		return area;
 	}
 };
 
 class Cuboid:public Rectangle{
 private:
-	float length;
+	float height;
 public:
-	Cuboid(){ length = 0; }
+	Cuboid(){ height = 0; }
 
 	void setLength(float l)
 	{
-		length = l;
+		height = l;
 		return;
 	}
 
@@ -106,7 +106,7 @@ public:
 	}
 };
 
-class Cylinder:public Circle{
+class Cylinder: virtual public Circle{
 protected:
 	float height;
 public:
@@ -125,7 +125,7 @@ public:
 	}
 };
 
-class Sphere:public Circle{
+class Sphere: virtual public Circle{
 protected:
 	float volume;
 public:
@@ -136,7 +136,7 @@ public:
 	}
 };
 
-class Spherelinder:public Circle, public Sphere{
+class Spherelinder:public Cylinder, public Sphere{
 public:
 	float calVolume()
 	{
@@ -149,21 +149,21 @@ int main()
 {
 	Shape s1, s2;
 
-	s1.setShape("Fred", 'R');
-	s1.showShape();
-
-	s2.setShape("Mary", 'B');
-	s2.showShape();
+//	s1.setShape("Fred", 'R');
+//	s1.showShape();
+//
+//	s2.setShape("Mary", 'B');
+//	s2.showShape();
 
 	Rectangle r1;
-	r1.setShape("Rect", 'R');
+	r1.setShape("Rectangle", 'R');
 	r1.setSides(3,4);
 	float area = r1.calArea();
 	r1.showShape();
 	cout << "Area: " << area << endl;
-
+	cout << "----------" << endl;
 	Cuboid c1;
-	c1.setShape("Cube", 'R');
+	c1.setShape("Cuboid", 'R');
 	c1.setSides(3,4);
 	c1.showShape();
 	float area1 = c1.calArea();
@@ -171,29 +171,40 @@ int main()
 	c1.setLength(5);
 	float vol = c1.calVolume();
 	cout << "Volume: " << vol << endl;
-
+	cout << "----------" << endl;
 	Circle c2;
 	c2.setShape("Circle", 'R');
 	c2.setRadius(2);
 	c2.showShape();
 	float area2=c2.calArea();
 	cout << "Area: " << area2 << endl;
-
+	cout << "----------" << endl;
 	Sphere s3;
 	s3.setShape("Sphere", 'R');
 	s3.setRadius(2);
 	s3.showShape();
 	float area3=s3.calArea();
 	cout << "Area: " << area3 << endl;
-	float vol=s3.calVolume();
-	cout << "Volume: " << vol << endl;
-
+	float vol1=s3.calVolume();
+	cout << "Volume: " << vol1 << endl;
+	cout << "----------" << endl;
 	Cylinder c3;
-	c3.setShape("Sphere", 'R');
+	c3.setShape("Cylinder", 'R');
 	c3.setRadius(2);
 	c3.showShape();
 	float area4=c3.calArea();
 	cout << "Area: " << area4 << endl;
-	float vol1=c3.calVolume();
-	cout << "Volume: " << vol1 << endl;
+	c3.setHeight(5);
+	float vol2=c3.calVolume();
+	cout << "Volume: " << vol2 << endl;
+	cout << "----------" << endl;
+	Spherelinder s4;
+	s4.setShape("Spherelinder", 'R');
+	s4.setRadius(2);
+	s4.showShape();
+	float area5=s4.calArea();
+	cout << "Area: " << area5 << endl;
+	s4.setHeight(5);
+	float vol3=s4.calVolume();
+	cout << "Volume: " << vol3 << endl;
 }
