@@ -127,6 +127,8 @@ void Create(passenger *head){
 		cin >> first; cin >> last;
 		bool namecheck=false;
 		passenger *current;
+		int type, vehicle,seat;
+		char select=' ';
 		while(current != NULL){
 			if(first==current->fname && last==current->lname){
 				namecheck=true;
@@ -141,8 +143,18 @@ void Create(passenger *head){
 			quit=true;
 		else{
 //			Print();
-		}
+			cout << "Select by category? (Y/N)";
+			cin >> select; cin.ignore();
+			if(select=='Y' || select=='y'){
 
+			}
+			if(select=='N' || select=='n'){
+
+			}
+			cout << "Select vehicle type: ";
+			cin >> type; cin.ignore();
+			cout << "Select vehicle"
+		}
 	}while(quit!=true);
 }
 
