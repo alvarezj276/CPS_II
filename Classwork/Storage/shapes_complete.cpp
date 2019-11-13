@@ -10,6 +10,14 @@
 #include <math.h>
 using namespace std;
 
+struct passenger
+{
+	string fname;
+	string lname;
+	int credit;
+	passenger *nextaddr;
+};
+
 class Car
 {
 	protected:
@@ -89,6 +97,12 @@ public:
 		return;
 	}
 };
+
+void Create(){
+	//enter name : first, last
+	//check database, confirm
+	//confirm remaining
+}
 
 int main()
 {
