@@ -15,6 +15,7 @@ struct passenger
 	string fname;
 	string lname;
 	int credit;
+	bool randomized=false;
 	passenger *nextaddr;
 };
 
@@ -98,16 +99,34 @@ public:
 	}
 };
 
-void Create(){
+void Create(passenger *head){
+	//do
 	//enter name : first, last
-	//check database, confirm
-	//confirm remaining
-
+	//if confirm database, proceed + report remaining seats
+		//if seats<=0 randomized=true; print error + exit
+		//else randomized=false;
+	//else print error + exit
+	//while()
+	passenger current=head;
+	string first,last;
+	bool quit=false;
+	do{
+		cout << "Enter name (first, last): ";
+		cin >> first; cin >> last;
+		bool namecheck=false;
+		passenger *current;
+		while(current != NULL){
+			if(first==current->fname && last==current->lname)
+				namecheck=true;
+			current = current->nextaddr;
+			i++;
+		}
+	}while(quit!=true);
 }
 
 int main()
 {
-	//Create()
+	//Create(head)
 	//Display()
 	//Modify()
 	//Delete()
