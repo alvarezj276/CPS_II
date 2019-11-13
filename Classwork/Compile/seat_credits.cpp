@@ -21,6 +21,16 @@ struct passenger
 	passenger *nextaddr;
 };
 
+struct reserved
+{
+	int reserve;
+	string pfname;
+	string plname;
+	string vehicle;
+	int location;
+	reserved *nextaddr;
+};
+
 class Car
 {
 	protected:
@@ -102,30 +112,38 @@ public:
 };
 
 void Create(passenger *head){
-//	//do
-//	//enter name : first, last
-//	//if confirm database, proceed + report remaining seats
-//		//if seats<=0 randomized=true; print error + exit
-//		//else randomized=false;
-//	//else print error + exit
-//	//while()
-//	passenger *current=head;
-//	string first,last;
-//	bool quit=false;
-//	do{
-//		cout << "Enter name (first, last): ";
-//		cin >> first; cin >> last;
-//		bool namecheck=false;
-//		passenger *current;
-//		while(current != NULL){
-//			if(first==current->fname && last==current->lname){
-//				namecheck=true;
-//				if()
-//			}
-//			current = current->nextaddr;
-//		}
-//
-//	}while(quit!=true);
+	//do
+	//enter name : first, last
+	//if confirm database, proceed + report remaining seats
+		//if seats<=0 randomized=true; print error + exit
+		//else randomized=false;
+	//else print error + exit
+	//while()
+	passenger *current=head;
+	string first,last;
+	bool quit=false;
+	do{
+		cout << "Enter name (first, last): ";
+		cin >> first; cin >> last;
+		bool namecheck=false;
+		passenger *current;
+		while(current != NULL){
+			if(first==current->fname && last==current->lname){
+				namecheck=true;
+				cout << current->fname <<" "<<current->lname << " has " << current->credit << " credits remaining." << endl;
+				if(current->credit<=0)
+					current->randomized=true;
+				else current->randomized=false;
+			}
+			current = current->nextaddr;
+		}
+		if(namecheck==false)
+			quit=true;
+		else{
+//			Print();
+		}
+
+	}while(quit!=true);
 }
 
 passenger *Read(){
@@ -133,8 +151,7 @@ passenger *Read(){
 
 	inFile.open("seat_credits.txt");
 
-	if (inFile.fail())
-	{
+	if (inFile.fail()){
 		cout << "\nThe file did not successfully open... Program Terminated\n" << endl;
 		exit (1);
 	}
@@ -144,23 +161,18 @@ passenger *Read(){
 	current = new passenger;
 	head = current;
 
-	do
-	{
+	do{
 		inFile >> current->fname;
 		inFile >> current->lname;
 		inFile >> current->credit;inFile.ignore();
-
-		if (inFile.eof())
-		{
+		if (inFile.eof()){
 			current->nextaddr = NULL;
 			break;
 		}
-		else
-		{
+		else{
 			current->nextaddr = new passenger;
 			current = current->nextaddr;
 		}
-
 	}
 	while(true);
 
