@@ -107,7 +107,7 @@ void Create(passenger *head){
 		//else randomized=false;
 	//else print error + exit
 	//while()
-	passenger current=head;
+	passenger *current=head;
 	string first,last;
 	bool quit=false;
 	do{
@@ -116,11 +116,13 @@ void Create(passenger *head){
 		bool namecheck=false;
 		passenger *current;
 		while(current != NULL){
-			if(first==current->fname && last==current->lname)
+			if(first==current->fname && last==current->lname){
 				namecheck=true;
+
+			}
 			current = current->nextaddr;
-			i++;
 		}
+
 	}while(quit!=true);
 }
 
