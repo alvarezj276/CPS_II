@@ -1,7 +1,7 @@
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Title: seat_credits.cpp
 // Course: Computational Problem Solving CPET-II
-// Developer: MATTHEW CHU
+// Developer: MATTHEW CHU & John Alvarez
 // Date : Fall 2019 (2191)
 // Description: Problem #2
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -102,6 +102,7 @@ void Create(){
 	//enter name : first, last
 	//check database, confirm
 	//confirm remaining
+
 }
 
 int main()
