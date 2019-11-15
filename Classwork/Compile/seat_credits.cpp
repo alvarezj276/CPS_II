@@ -36,7 +36,6 @@ class Car
 	protected:
 		string color;
 		string type;
-
 	public:
 	    Car()
 	      { color = " "; type = " "; }
@@ -73,7 +72,7 @@ class Pickup:public Car{
 protected:
 	int front;
 public:
-	Pickup(){ front = 0; }
+	Pickup(){ front = 5; }
 
 	void setPickup(int f)
 	{
@@ -84,41 +83,36 @@ public:
 
 class Compact:public Car{
 protected:
-	int front,back;
+	int front,back1,back2;
 public:
-	Compact(){ front = 0; back = 0; }
+	Compact(){ front = 5; back1 = 3; back2=3; }
 
-	void setCompact(int f, int b)
+	void setCompact(int f, int b1, int b2)
 	{
 		front = f;
-		back = b;
+		back1 = b1;
+		back2 = b2;
 		return;
 	}
 };
 
 class Sedan:public Car{
 protected:
-	int front,sideback,sidemiddle;
+	int front,sideback1,sideback2,sidemiddle;
 public:
-	Sedan(){ front = 0; sideback=0; sidemiddle=0; }
+	Sedan(){ front = 5; sideback1=2; sideback2=2; sidemiddle=1; }
 
-	void setSedan(int f, int sb, int sm)
+	void setSedan(int f, int sb1, int sb2, int sm)
 	{
 		front = f;
-		sideback = sb;
+		sideback1 = sb1;
+		sideback2 = sb2;
 		sidemiddle = sm;
 		return;
 	}
 };
 
 void Create(passenger *head){
-	//do
-	//enter name : first, last
-	//if confirm database, proceed + report remaining seats
-		//if seats<=0 randomized=true; print error + exit
-		//else randomized=false;
-	//else print error + exit
-	//while()
 	passenger *current=head;
 	string first,last;
 	bool quit=false;
@@ -146,14 +140,18 @@ void Create(passenger *head){
 			cout << "Select by category? (Y/N)";
 			cin >> select; cin.ignore();
 			if(select=='Y' || select=='y'){
+				cout << "Select vehicle type (1-3): ";
+				cin >> type; cin.ignore();
+				if(type==1){
 
+				}
 			}
 			if(select=='N' || select=='n'){
 
 			}
-			cout << "Select vehicle type: ";
-			cin >> type; cin.ignore();
-			cout << "Select vehicle"
+			else{
+				cout << "Incorrect vehicle type. Please restart selection." << endl;
+			}
 		}
 	}while(quit!=true);
 }
@@ -201,6 +199,16 @@ int main()
 	//Delete()
 	//Print()
 	//Reservation()
+
+	Pickup pick[3];
+	pick[0].setCar("PURPLE","TRUCK");
+	pick[1].setCar("YELLOW","TRUCK");
+	pick[2].setCar("RED","TRUCK");
+	Compact comp[3];
+	comp[0].setCar("GREEN","COMPACT");
+	comp[1].setCar("GREEN","COMPACT");
+	comp[2].setCar("GREEN","COMPACT");
+	Sedan sed[3];
 
 	passenger *head = Read();
 	cout << head->fname << endl;
