@@ -20,19 +20,22 @@ struct passenger
 	string fname;
 	string lname;
 	int credit;
+	int reserve;
+	string vehicle;
+	int location;
 	bool randomized=false;
 	passenger *nextaddr;
 };
 
-struct reserved
-{
-	int reserve;
-	string pfname;
-	string plname;
-	string vehicle;
-	int location;
-	reserved *nextaddr;
-};
+// struct reserved
+// {
+// 	int reserve;
+// 	string pfname;
+// 	string plname;
+// 	string vehicle;
+// 	int location;
+// 	reserved *nextaddr;
+// };
 
 class Car
 {
@@ -505,22 +508,18 @@ int main()
 	//Print()
 	//Reservation()
 
-//	Car vehicle[3][3];
 	Pickup pick[3];
 	pick[0].setCar("PURPLE","TRUCK");
 	pick[1].setCar("YELLOW","TRUCK");
 	pick[2].setCar("RED","TRUCK");
-//	vehicle[0]=pick;
 	Compact comp[3];
 	comp[0].setCar("GREEN","COMPACT");
 	comp[1].setCar("BLUE","COMPACT");
 	comp[2].setCar("YELLOW","COMPACT");
-//	vehicle[1]=comp;
 	Sedan sed[3];
 	sed[0].setCar("RED","SEDAN");
 	sed[1].setCar("GREEN","SEDAN");
 	sed[2].setCar("BLUE","SEDAN");
-//	vehicle[2]=sed;
 
 	passenger *head = Read();
 	Create(head,pick,comp,sed);
