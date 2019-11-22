@@ -53,6 +53,36 @@ class Car
 			return;
 		}
 
+// void display() {
+
+// 	cout << "\n\n\tPick Up\t\tCompact\t\tSedan\n\t______\t\t _____\t\t_____\n";
+
+// 	cout << "\t|PURPLE|\t|GREEN|\t\t| RED |\n";
+// 	cout << "\t" << "|(" << pick[1] << ")(" << pick[2] << ")|";
+// 	cout << "\t" << "|(" << comp[1] << ") (" << comp[2] << ")|";
+// 	cout << "\t" << "|(" << sed[3] << ")   (" << sed[3] << ")|\n";
+
+// 	cout << "\t\t\t" << "|(" << comp[1] << ") (" << comp[2] << ")|";
+// 	cout << "\t" << "|(" << sed[3] << ")(" << sed[3] << ")(" << sed[3]<< ")|" << "\n\n";
+
+// 	cout << "\t|YELLOW|\t| BLUE|\t\t|GREEN|\n";
+// 	cout << "\t" << "|(" << pick[1] << ")(" << pick[2] << ")|";
+// 	cout << "\t" << "|(" << comp[1] << ") (" << comp[2] << ")|";
+// 	cout << "\t" << "|(" << sed[3] << ")   (" << sed[3] << ")|\n";
+
+// 	cout << "\t\t\t" << "|(" << comp[1] << ") (" << comp[2] << ")|";
+// 	cout << "\t" << "|(" << sed[3] << ")(" << sed[3] << ")(" << sed[3]<< ")|" << "\n\n";
+
+// 	cout << "\t| RED|\t\t|YELLOW|\t|BLUE|\n";
+// 	cout << "\t" << "|(" << pick[1] << ")(" << pick[2] << ")|";
+// 	cout << "\t" << "|(" << comp[1] << ") (" << comp[2] << ")|";
+// 	cout << "\t" << "|(" << sed[3] << ")   (" << sed[3] << ")|\n";
+
+// 	cout << "\t\t\t" << "|(" << comp[1] << ") (" << comp[2] << ")|";
+// 	cout << "\t" << "|(" << sed[3] << ")(" << sed[3] << ")(" << sed[3] << ")|" << "\n\n";
+
+// }	
+	
 //		void showCar()
 //		{
 //			cout << "Name : " << sName << endl;
@@ -508,6 +538,51 @@ int main()
 	//Print()
 	//Reservation()
 
+// 	do {
+// 		cout << "Menu: " << endl;
+// 		cout << "(1)Create Reservation" << setw() << "(2)Display Reservation"  << setw()
+// 				<< "(3)Modify Reservation"  << setw() << "(4)Print Reservation"  << setw() << endl;
+// 		cout << "(5)Delete Reservation " << setw() << "(6)Print Vehicle Assignment"  << setw() << "(7)Reservation Print" << endl;
+// 		cout << "option:";
+// 		cin >> option;
+// 		switch (option) {
+// 		case '1':
+// 			create();
+
+// 			break;
+// 		case '2':
+// 			break;
+// 		case '3':
+// 			break;
+// 		case '4':
+// 			break;
+// 		case '5':
+// 			break;
+// 		case '6':
+// 			cout << "Enter: " << endl;
+// 			cout << "1) Purple Pickup" << right << setw(20)
+// 					<< "2) Yellow Pickup" << right << setw(20)
+// 					<< "3) Red Pickup" << endl;
+// 			cout << "4) Green Compact" << right << setw(19) << "5) Blue Compact"
+// 					<< right << setw(25) << "6) Yellow Compact" << endl;
+// 			cout << "7) Red Sedan" << right << setw(24) << "8) Green Sedan"
+// 					<< right << setw(20) << "9) Blue Sedan" << endl;
+// 			cin >> option;
+// 			switch (option) {
+// 			case '1':
+// 				break;
+// 			case '2':
+// 				();
+// 				break;
+// 			case '3':
+// 				();
+			
+// 				break;
+// 			}
+
+// 		};
+// 	} while (true);
+	
 	Pickup pick[3];
 	pick[0].setCar("PURPLE","TRUCK");
 	pick[1].setCar("YELLOW","TRUCK");
